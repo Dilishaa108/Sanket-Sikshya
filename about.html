@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>About Us — SanketSiksha | संकेत शिक्षा</title>
+<meta name="description" content="The story behind SanketSiksha — Nepal's first free Sign Language and Braille learning platform. Our mission, values, and vision for an accessible Nepal."/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&family=Noto+Sans+Devanagari:wght@400;600&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#080E17;--bg2:#0D1520;--bg3:#111D2E;--blue:#3B82F6;--blue-d:#2563EB;--blue-l:#60A5FA;--blue-ll:#93C5FD;--gold:#F0B429;--gold-l:#FDE68A;--text:#E2E8F0;--muted:#64748B;--muted-l:#94A3B8;--white:#F8FAFC;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;}
+#bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:16px 6vw;background:rgba(8,14,23,0.9);backdrop-filter:blur(20px);border-bottom:1px solid #3B82F618;}
+nav.scrolled{box-shadow:0 2px 40px #00000060;}
+.nav-logo{display:flex;flex-direction:column;line-height:1.1;text-decoration:none;}
+.nav-logo .dev{font-family:'Noto Sans Devanagari',sans-serif;font-size:10px;font-weight:600;color:var(--blue-l);letter-spacing:0.1em;}
+.nav-logo .eng{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:var(--white);}
+.nav-links{display:flex;gap:28px;list-style:none;}
+.nav-links a{font-size:12px;color:var(--muted-l);text-decoration:none;letter-spacing:0.09em;text-transform:uppercase;transition:color 0.2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--blue-l);}
+.nav-cta{background:var(--blue);color:#fff;border:none;cursor:pointer;padding:10px 22px;border-radius:6px;font-size:13px;font-weight:500;text-decoration:none;transition:all 0.2s;}
+.nav-cta:hover{background:var(--blue-d);}
+
+/* HERO */
+.about-hero{position:relative;z-index:1;padding:140px 6vw 80px;text-align:center;}
+.page-tag{display:inline-flex;align-items:center;gap:8px;background:#1E3A5F50;border:1px solid #3B82F630;border-radius:20px;padding:6px 16px;font-size:11px;color:var(--blue-ll);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:24px;}
+.page-title{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,6vw,72px);font-weight:700;color:var(--white);line-height:1.1;margin-bottom:16px;}
+.page-title em{color:var(--blue-l);font-style:italic;}
+.page-nep{font-family:'Noto Sans Devanagari',sans-serif;font-size:18px;color:var(--gold);margin-bottom:16px;}
+
+.main-wrap{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:0 6vw 80px;}
+
+/* MISSION */
+.mission-block{background:var(--bg2);border:1px solid #1E3A5F;border-radius:24px;padding:52px 48px;margin-bottom:48px;position:relative;overflow:hidden;text-align:center;}
+.mission-block::before{content:'';position:absolute;top:-80px;right:-80px;width:320px;height:320px;background:radial-gradient(circle,#3B82F60C,transparent 70%);pointer-events:none;}
+.mb-quote{font-family:'Cormorant Garamond',serif;font-size:clamp(22px,3.5vw,38px);font-weight:600;font-style:italic;color:var(--white);line-height:1.5;max-width:800px;margin:0 auto 24px;}
+.mb-quote span{color:var(--blue-l);}
+.mb-sub{font-size:14px;color:var(--muted-l);letter-spacing:0.1em;text-transform:uppercase;}
+
+/* STORY */
+.story-section{display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-bottom:64px;align-items:start;}
+.story-text h2{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4vw,44px);font-weight:700;color:var(--white);margin-bottom:20px;line-height:1.2;}
+.story-text h2 span{color:var(--blue-l);}
+.story-text p{font-size:15px;color:var(--muted-l);line-height:1.85;margin-bottom:16px;}
+.story-text p strong{color:var(--white);}
+.story-visual{background:var(--bg2);border:1px solid #1E3A5F;border-radius:20px;padding:32px;display:flex;flex-direction:column;gap:20px;}
+.sv-stat{display:flex;align-items:center;gap:16px;padding:16px;background:var(--bg3);border-radius:12px;}
+.sv-num{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:700;color:var(--blue-l);min-width:80px;}
+.sv-label{font-size:13px;color:var(--muted-l);line-height:1.5;}
+.sv-label strong{display:block;font-size:15px;color:var(--white);font-weight:500;margin-bottom:2px;}
+
+/* PILLARS */
+.pillars-section{margin-bottom:64px;}
+.pillars-title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4vw,44px);font-weight:700;color:var(--white);margin-bottom:8px;}
+.pillars-title span{color:var(--blue-l);}
+.pillars-sub{font-size:14px;color:var(--muted-l);margin-bottom:36px;line-height:1.6;}
+.pillars-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;}
+.pillar{background:var(--bg2);border:1px solid #1E3A5F;border-radius:16px;padding:28px;position:relative;transition:all 0.25s;}
+.pillar:hover{border-color:var(--blue);transform:translateY(-2px);}
+.pillar-num{font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:700;color:#1E3A5F;position:absolute;top:16px;right:20px;}
+.pillar-icon{font-size:28px;margin-bottom:12px;}
+.pillar-title{font-size:16px;font-weight:600;color:var(--white);margin-bottom:6px;}
+.pillar-nep{font-family:'Noto Sans Devanagari',sans-serif;font-size:12px;color:var(--gold);margin-bottom:10px;}
+.pillar-desc{font-size:13px;color:var(--muted-l);line-height:1.7;}
+
+/* PARTNERS */
+.partners-section{margin-bottom:64px;}
+.pt-title{font-family:'Cormorant Garamond',serif;font-size:clamp(24px,3.5vw,38px);font-weight:700;color:var(--white);margin-bottom:8px;}
+.pt-title span{color:var(--blue-l);}
+.pt-sub{font-size:14px;color:var(--muted-l);margin-bottom:32px;line-height:1.6;}
+.partners-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;}
+.partner-card{background:var(--bg2);border:1px solid #1E3A5F;border-radius:14px;padding:20px 24px;transition:border-color 0.2s;}
+.partner-card:hover{border-color:var(--blue);}
+.pc-name{font-size:15px;font-weight:500;color:var(--white);margin-bottom:4px;}
+.pc-role{font-size:12px;color:var(--muted-l);}
+
+/* TIMELINE */
+.timeline{margin-bottom:64px;}
+.tl-title{font-family:'Cormorant Garamond',serif;font-size:clamp(24px,3.5vw,38px);font-weight:700;color:var(--white);margin-bottom:36px;}
+.tl-title span{color:var(--blue-l);}
+.tl-items{display:flex;flex-direction:column;gap:0;}
+.tl-item{display:grid;grid-template-columns:120px 32px 1fr;gap:0 20px;position:relative;}
+.tl-item:not(:last-child) .tl-line{position:absolute;left:140px;top:32px;bottom:-20px;width:2px;background:linear-gradient(180deg,var(--blue),transparent);}
+.tl-date{font-family:'Cormorant Garamond',serif;font-size:14px;font-weight:600;color:var(--muted);padding-top:6px;text-align:right;}
+.tl-dot{width:14px;height:14px;border-radius:50%;background:var(--blue);box-shadow:0 0 12px #3B82F660;margin-top:8px;flex-shrink:0;position:relative;z-index:1;}
+.tl-content{padding:0 0 40px 0;}
+.tl-content h4{font-size:15px;font-weight:500;color:var(--white);margin-bottom:4px;}
+.tl-content p{font-size:13px;color:var(--muted-l);line-height:1.6;}
+
+/* CTA */
+.about-cta{background:linear-gradient(135deg,#0D1520,#111D2E);border:1px solid #1E3A5F;border-radius:24px;padding:60px 48px;text-align:center;}
+.acta-title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4vw,48px);font-weight:700;color:var(--white);margin-bottom:12px;}
+.acta-nep{font-family:'Noto Sans Devanagari',sans-serif;font-size:18px;color:var(--gold);margin-bottom:16px;}
+.acta-sub{font-size:15px;color:var(--muted-l);margin-bottom:32px;line-height:1.6;max-width:500px;margin-left:auto;margin-right:auto;}
+.acta-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+.btn-p{display:inline-block;background:var(--blue);color:#fff;padding:14px 32px;border-radius:8px;text-decoration:none;font-size:14px;font-weight:500;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.btn-p:hover{background:var(--blue-d);transform:translateY(-1px);}
+.btn-s{display:inline-block;background:transparent;color:var(--blue-ll);padding:14px 32px;border-radius:8px;text-decoration:none;font-size:14px;font-weight:500;cursor:pointer;border:1px solid #3B82F640;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.btn-s:hover{border-color:var(--blue);}
+
+footer{background:#050A10;color:var(--text);padding:40px 6vw 24px;border-top:1px solid #1E3A5F;position:relative;z-index:1;}
+.fbot{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+.fbot p{font-size:11px;color:var(--muted);}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.d1{transition-delay:0.1s;}.d2{transition-delay:0.2s;}.d3{transition-delay:0.3s;}
+
+@media(max-width:900px){
+  .story-section{grid-template-columns:1fr;}
+  .nav-links{display:none;}
+  .about-cta,.mission-block{padding:36px 24px;}
+}
+</style>
+</head>
+<body>
+<canvas id="bg-canvas"></canvas>
+
+<nav id="navbar">
+  <a href="index.html" class="nav-logo">
+    <span class="dev">संकेत शिक्षा</span>
+    <span class="eng">SanketSiksha</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="braille.html">Braille</a></li>
+    <li><a href="signlanguage.html">Sign Language</a></li>
+    <li><a href="teachers.html">For Teachers</a></li>
+    <li><a href="about.html" class="active">About</a></li>
+  </ul>
+  <a href="braille.html" class="nav-cta">Start Learning →</a>
+</nav>
+
+<!-- HERO -->
+<section class="about-hero reveal">
+  <div class="page-tag">🇳🇵 Our Story</div>
+  <h1 class="page-title">Built for <em>Nepal.</em><br/>Free for Everyone.</h1>
+  <p class="page-nep">नेपालको लागि बनाइएको — सबैका लागि निःशुल्क</p>
+</section>
+
+<div class="main-wrap">
+
+  <!-- MISSION QUOTE -->
+  <div class="mission-block reveal">
+    <p class="mb-quote">"Bridge the <span>communication gap</span> between deaf and blind individuals and the people around them in Nepal — <span>for free, forever.</span>"</p>
+    <p class="mb-sub">— The SanketSiksha Mission</p>
+  </div>
+
+  <!-- STORY -->
+  <div class="story-section reveal">
+    <div class="story-text">
+      <h2>Why We <span>Built This</span></h2>
+      <p>In Nepal, over <strong>2.2 million people</strong> live with a disability affecting communication. Deaf and hard-of-hearing individuals number in the hundreds of thousands. Blind and visually impaired Nepalis face similar challenges — yet almost no free, accessible, Nepali-language learning resources exist for their families, teachers, or communities.</p>
+      <p>What little exists is scattered, in English, behind paywalls, or designed for Western contexts completely disconnected from Nepal's reality. A teacher in Biratnagar, a parent in Pokhara, a student in Kathmandu — none of them should have to pay to learn how to communicate with the people they love.</p>
+      <p><strong>SanketSiksha was built to change that.</strong> Nepal's first platform combining both Nepal Sign Language (NSL) and Braille — in Nepali — completely free, designed to work even on slow internet and cheap phones.</p>
+    </div>
+    <div class="story-visual">
+      <div class="sv-stat"><div class="sv-num">2.2M+</div><div class="sv-label"><strong>Nepalis with disabilities</strong>Affecting communication — most without access to resources</div></div>
+      <div class="sv-stat"><div class="sv-num">0</div><div class="sv-label"><strong>Free Nepali NSL platforms</strong>Before SanketSiksha — zero free options in Nepali existed</div></div>
+      <div class="sv-stat"><div class="sv-num">26</div><div class="sv-label"><strong>Letters in full alphabet</strong>Both Braille and Sign Language — interactive and free</div></div>
+      <div class="sv-stat"><div class="sv-num">₹0</div><div class="sv-label"><strong>Cost to learners</strong>Free forever — no paywalls, no subscriptions, no ads</div></div>
+    </div>
+  </div>
+
+  <!-- PILLARS -->
+  <div class="pillars-section reveal">
+    <h2 class="pillars-title">Our <span>Five Pillars</span></h2>
+    <p class="pillars-sub">These are the founding commitments of SanketSiksha — non-negotiable principles we will never compromise on.</p>
+    <div class="pillars-grid">
+      <div class="pillar"><div class="pillar-num">01</div><div class="pillar-icon">🆓</div><div class="pillar-title">Free Forever, No Paywalls</div><div class="pillar-nep">सधैं निःशुल्क</div><div class="pillar-desc">Every lesson, quiz, flashcard, and resource on SanketSiksha will always be 100% free. No subscription. No premium tier. No exceptions. This is a promise.</div></div>
+      <div class="pillar d1"><div class="pillar-num">02</div><div class="pillar-icon">🇳🇵</div><div class="pillar-title">Fully in Nepali Language</div><div class="pillar-nep">नेपाली भाषामा</div><div class="pillar-desc">All content is designed first for Nepali speakers. Explanations, Braille equivalents, and sign descriptions use Nepali — because that is the language of our community.</div></div>
+      <div class="pillar d2"><div class="pillar-num">03</div><div class="pillar-icon">📱</div><div class="pillar-title">Works on Slow Internet</div><div class="pillar-nep">सुस्त इन्टरनेटमा पनि</div><div class="pillar-desc">Designed to load on 3G connections and budget Android phones. No heavy frameworks, no massive downloads. Accessible to students in Humla, Taplejung, and everywhere in between.</div></div>
+      <div class="pillar d3"><div class="pillar-num">04</div><div class="pillar-icon">✋</div><div class="pillar-title">Both NSL and Braille Together</div><div class="pillar-nep">NSL र ब्रेल दुवै</div><div class="pillar-desc">The only platform in South Asia combining Nepal Sign Language and Braille in one place. Serving both the deaf and the blind communities — together.</div></div>
+      <div class="pillar d1"><div class="pillar-num">05</div><div class="pillar-icon">📚</div><div class="pillar-title">Built for Teachers</div><div class="pillar-nep">शिक्षकका लागि</div><div class="pillar-desc">Lesson plans, flashcards, classroom guides, and printable materials — specifically designed for Nepal's special education teachers who give so much with so little support.</div></div>
+    </div>
+  </div>
+
+  <!-- PARTNERS / COMMUNITY -->
+  <div class="partners-section reveal">
+    <h2 class="pt-title">Community <span>Partners</span></h2>
+    <p class="pt-sub">We are reaching out to these organizations to collaborate, contribute content, and validate our approach. If you represent any of these groups — we would love to connect.</p>
+    <div class="partners-grid">
+      <div class="partner-card"><div class="pc-name">NAB Nepal</div><div class="pc-role">National Association of the Blind — Braille resource partnership</div></div>
+      <div class="partner-card"><div class="pc-name">NFDN Nepal</div><div class="pc-role">National Federation of Deaf Nepal — NSL video contributors</div></div>
+      <div class="partner-card"><div class="pc-name">Deaf Schools Nepal</div><div class="pc-role">Schools in KTM, Pokhara, Biratnagar — teacher resource packs</div></div>
+      <div class="partner-card"><div class="pc-name">Tribhuvan University</div><div class="pc-role">Special Education Department — content validation</div></div>
+      <div class="partner-card"><div class="pc-name">Kathmandu University</div><div class="pc-role">Special Education Department — research collaboration</div></div>
+      <div class="partner-card"><div class="pc-name">You?</div><div class="pc-role">Are you a teacher, community member, or organization? We want to hear from you.</div></div>
+    </div>
+  </div>
+
+  <!-- TIMELINE -->
+  <div class="timeline reveal">
+    <h2 class="tl-title">Our <span>Roadmap</span></h2>
+    <div class="tl-items">
+      <div class="tl-item">
+        <div class="tl-line"></div>
+        <div class="tl-date">2025 Q1</div>
+        <div class="tl-dot"></div>
+        <div class="tl-content"><h4>✅ Platform Launch</h4><p>Interactive Braille trainer, NSL alphabet explorer, sign language lessons, teacher resources, and about page — all free and live.</p></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-line"></div>
+        <div class="tl-date">2025 Q2</div>
+        <div class="tl-dot" style="background:#334155;box-shadow:none;"></div>
+        <div class="tl-content"><h4>🎯 Video Lessons</h4><p>Real NSL video lessons contributed by Nepali deaf community members — 26 letters filmed and embedded.</p></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-line"></div>
+        <div class="tl-date">2025 Q3</div>
+        <div class="tl-dot" style="background:#334155;box-shadow:none;"></div>
+        <div class="tl-content"><h4>🎯 Common Words & Phrases</h4><p>Expand beyond the alphabet — 100 common NSL words and phrases for greetings, family, numbers, and daily life.</p></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-line"></div>
+        <div class="tl-date">2025 Q4</div>
+        <div class="tl-dot" style="background:#334155;box-shadow:none;"></div>
+        <div class="tl-content"><h4>🎯 Mobile App</h4><p>Android app optimized for offline use — download lessons once and study anywhere without internet.</p></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2026</div>
+        <div class="tl-dot" style="background:#1E3A5F;box-shadow:none;border:2px solid #334155;"></div>
+        <div class="tl-content"><h4>🌟 Full Curriculum</h4><p>Complete structured courses for children, adults, teachers — with certificates. Partner with 10 schools across Nepal.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="about-cta reveal">
+    <h2 class="acta-title">Join the Movement</h2>
+    <p class="acta-nep">यस अभियानमा सामेल हुनुहोस्</p>
+    <p class="acta-sub">Share SanketSiksha with a teacher, a parent, or a community that needs it. Every share helps one more family connect.</p>
+    <div class="acta-btns">
+      <a href="braille.html" class="btn-p">Start Learning Free</a>
+      <a href="teachers.html" class="btn-s">Teacher Resources</a>
+    </div>
+    <p style="font-size:12px;color:var(--muted);margin-top:24px;">Contact us: sanketsiksha@gmail.com · Built in Nepal 🇳🇵 · Free forever</p>
+  </div>
+
+</div>
+
+<footer>
+  <div class="fbot">
+    <p>© 2025 SanketSiksha — संकेत शिक्षा. All Rights Reserved. Made with ❤️ in Nepal 🇳🇵 · Free forever, no paywalls.</p>
+    <p style="font-size:10px;color:#1E3A5F;">Licensed under CC BY-NC 4.0</p>
+  </div>
+</footer>
+
+<script>
+const canvas=document.getElementById('bg-canvas');
+const ctx=canvas.getContext('2d');
+function resizeCanvas(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}
+window.addEventListener('resize',()=>{resizeCanvas();drawBG();});
+function drawBG(){
+  const W=canvas.width,H=canvas.height;
+  ctx.clearRect(0,0,W,H);
+  const g=ctx.createLinearGradient(0,0,W,H);
+  g.addColorStop(0,'#080E17');g.addColorStop(0.5,'#0A1628');g.addColorStop(1,'#080E17');
+  ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  for(let i=0;i<3;i++){
+    const grd=ctx.createRadialGradient(W*(0.2+i*0.3),H*(0.3+i*0.2),0,W*(0.2+i*0.3),H*(0.3+i*0.2),W*0.35);
+    grd.addColorStop(0,i===1?'rgba(240,180,41,0.04)':'rgba(59,130,246,0.06)');
+    grd.addColorStop(1,'transparent');
+    ctx.fillStyle=grd;ctx.fillRect(0,0,W,H);
+  }
+  const spacing=36;
+  const cols=Math.ceil(W/spacing)+1,rows=Math.ceil(H/(spacing*1.4))+1;
+  const patterns=[[1,0,1,0,0,0],[1,1,0,0,0,0],[0,1,1,0,0,0],[1,0,0,1,0,0]];
+  let pi=0;
+  for(let c=0;c<cols;c+=3){for(let r=0;r<rows;r+=3){
+    const pat=patterns[pi%patterns.length];pi++;
+    const bx=c*spacing+12,by=r*spacing*1.4+12;
+    for(let dc=0;dc<2;dc++){for(let dr=0;dr<3;dr++){
+      const on=pat[dr*2+dc],dx=bx+dc*13,dy=by+dr*13;
+      if(on){const grd=ctx.createRadialGradient(dx,dy,0,dx,dy,6);grd.addColorStop(0,'rgba(59,130,246,0.25)');grd.addColorStop(1,'rgba(59,130,246,0)');ctx.fillStyle=grd;ctx.beginPath();ctx.arc(dx,dy,6,0,Math.PI*2);ctx.fill();ctx.beginPath();ctx.arc(dx,dy,2.8,0,Math.PI*2);ctx.fillStyle='rgba(96,165,250,0.32)';}
+      else{ctx.beginPath();ctx.arc(dx,dy,1.6,0,Math.PI*2);ctx.fillStyle='rgba(30,58,95,0.4)';}
+      ctx.fill();
+    }}
+  }}
+}
+resizeCanvas();drawBG();
+window.addEventListener('scroll',()=>document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>40));
+const obs=new IntersectionObserver(e=>{e.forEach(el=>{if(el.isIntersecting)el.target.classList.add('visible');});},{threshold:0.08});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+window.addEventListener('load',()=>{resizeCanvas();drawBG();});
+</script>
+</body>
+</html>

@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sign Language Lessons — SanketSiksha | संकेत शिक्षा</title>
+<meta name="description" content="Learn Nepal Sign Language (NSL) fingerspelling A-Z with video placeholders, practice mode, and quiz. Free forever."/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&family=Noto+Sans+Devanagari:wght@400;600&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#080E17;--bg2:#0D1520;--bg3:#111D2E;
+  --blue:#3B82F6;--blue-d:#2563EB;--blue-l:#60A5FA;--blue-ll:#93C5FD;
+  --gold:#F0B429;--gold-l:#FDE68A;
+  --text:#E2E8F0;--muted:#64748B;--muted-l:#94A3B8;--white:#F8FAFC;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;}
+#bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:16px 6vw;background:rgba(8,14,23,0.9);backdrop-filter:blur(20px);border-bottom:1px solid #3B82F618;}
+nav.scrolled{box-shadow:0 2px 40px #00000060;}
+.nav-logo{display:flex;flex-direction:column;line-height:1.1;text-decoration:none;}
+.nav-logo .dev{font-family:'Noto Sans Devanagari',sans-serif;font-size:10px;font-weight:600;color:var(--blue-l);letter-spacing:0.1em;}
+.nav-logo .eng{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:var(--white);}
+.nav-links{display:flex;gap:28px;list-style:none;}
+.nav-links a{font-size:12px;color:var(--muted-l);text-decoration:none;letter-spacing:0.09em;text-transform:uppercase;transition:color 0.2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--blue-l);}
+.nav-cta{background:var(--blue);color:#fff;border:none;cursor:pointer;padding:10px 22px;border-radius:6px;font-size:13px;font-weight:500;text-decoration:none;transition:all 0.2s;}
+.nav-cta:hover{background:var(--blue-d);transform:translateY(-1px);}
+
+/* PAGE HERO */
+.page-hero{position:relative;z-index:1;padding:140px 6vw 80px;text-align:center;}
+.page-tag{display:inline-flex;align-items:center;gap:8px;background:#1E3A5F50;border:1px solid #3B82F630;border-radius:20px;padding:6px 16px;font-size:11px;color:var(--blue-ll);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:24px;}
+.page-title{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,6vw,72px);font-weight:700;color:var(--white);line-height:1.1;margin-bottom:16px;}
+.page-title em{color:var(--blue-l);font-style:italic;}
+.page-nep{font-family:'Noto Sans Devanagari',sans-serif;font-size:18px;color:var(--gold);margin-bottom:16px;}
+.page-desc{font-size:16px;color:var(--muted-l);max-width:600px;margin:0 auto 40px;line-height:1.7;}
+.progress-bar-wrap{max-width:500px;margin:0 auto 12px;background:#1E3A5F;border-radius:8px;height:8px;overflow:hidden;}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--blue-l));border-radius:8px;transition:width 0.5s ease;width:0%;}
+.progress-label{font-size:11px;color:var(--muted);letter-spacing:0.1em;}
+
+/* TABS */
+.tabs-wrap{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:0 6vw 40px;}
+.tabs{display:flex;gap:4px;background:var(--bg2);border:1px solid #1E3A5F;border-radius:12px;padding:4px;margin-bottom:40px;width:fit-content;}
+.tab-btn{padding:10px 28px;border-radius:9px;border:none;background:transparent;color:var(--muted-l);font-size:13px;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;letter-spacing:0.04em;}
+.tab-btn.active{background:var(--blue);color:#fff;font-weight:500;}
+.tab-btn:hover:not(.active){color:var(--white);}
+
+/* LESSON GRID */
+.lesson-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:12px;margin-bottom:40px;}
+.letter-btn{background:var(--bg2);border:1px solid #1E3A5F;border-radius:12px;padding:16px 8px;cursor:pointer;text-align:center;transition:all 0.25s;position:relative;}
+.letter-btn:hover{border-color:var(--blue);background:var(--bg3);transform:translateY(-2px);}
+.letter-btn.active{border-color:var(--blue);background:#1E3A5F40;box-shadow:0 0 20px #3B82F620;}
+.letter-btn.done{border-color:#10B981;background:#10B98110;}
+.letter-btn.done::after{content:'✓';position:absolute;top:6px;right:8px;font-size:10px;color:#10B981;}
+.lb-hand{width:50px;height:56px;margin:0 auto 8px;}
+.lb-hand svg{width:100%;height:100%;}
+.lb-char{display:block;font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:var(--white);}
+.lb-nep{display:block;font-family:'Noto Sans Devanagari',sans-serif;font-size:11px;color:var(--gold);margin-top:2px;}
+
+/* DETAIL PANEL */
+.detail-wrap{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:48px;}
+.video-panel{background:var(--bg2);border:1px solid #1E3A5F;border-radius:16px;overflow:hidden;}
+.video-placeholder{aspect-ratio:16/9;background:#0A1628;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;position:relative;}
+.vp-icon{width:72px;height:72px;background:#1E3A5F;border-radius:50%;display:flex;align-items:center;justify-content:center;border:2px solid #3B82F640;}
+.vp-icon svg{width:32px;height:32px;}
+.vp-title{font-size:14px;color:var(--muted-l);}
+.vp-sub{font-size:12px;color:var(--muted);text-align:center;max-width:200px;line-height:1.5;}
+.vp-badge{position:absolute;top:12px;left:12px;background:#3B82F620;border:1px solid #3B82F640;border-radius:6px;padding:4px 10px;font-size:10px;color:var(--blue-ll);letter-spacing:0.1em;text-transform:uppercase;}
+.video-info{padding:20px 24px;}
+.vi-letter{font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:700;color:var(--white);line-height:1;}
+.vi-nep{font-family:'Noto Sans Devanagari',sans-serif;font-size:20px;color:var(--gold);margin:4px 0 12px;}
+.vi-desc{font-size:14px;color:var(--muted-l);line-height:1.6;margin-bottom:16px;}
+.vi-hint{background:#1E3A5F30;border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:12px 16px;font-size:13px;color:var(--muted-l);line-height:1.6;}
+.info-panel{background:var(--bg2);border:1px solid #1E3A5F;border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:16px;}
+.ip-hand-big{display:flex;align-items:center;justify-content:center;padding:24px;background:#0A1628;border-radius:12px;animation:bob 2.5s ease-in-out infinite;}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.ip-hand-big svg{width:140px;height:160px;}
+.ip-steps h4{font-size:11px;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:12px;}
+.step-list{display:flex;flex-direction:column;gap:8px;}
+.step-item{display:flex;gap:10px;align-items:flex-start;}
+.step-num{width:20px;height:20px;border-radius:50%;background:var(--blue);color:#fff;font-size:10px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.step-text{font-size:13px;color:var(--muted-l);line-height:1.5;}
+.nav-btns{display:flex;gap:10px;}
+.nav-btn{flex:1;padding:10px;border:1px solid #1E3A5F;border-radius:8px;background:transparent;color:var(--muted-l);font-size:13px;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;}
+.nav-btn:hover{border-color:var(--blue);color:var(--white);}
+.nav-btn.primary{background:var(--blue);border-color:var(--blue);color:#fff;}
+.nav-btn.primary:hover{background:var(--blue-d);}
+
+/* PRACTICE MODE */
+.practice-wrap{display:none;}
+.practice-wrap.active{display:block;}
+.practice-card{background:var(--bg2);border:1px solid #1E3A5F;border-radius:20px;padding:48px;text-align:center;max-width:600px;margin:0 auto 32px;}
+.pc-prompt{font-size:13px;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:16px;}
+.pc-letter{font-family:'Cormorant Garamond',serif;font-size:120px;font-weight:700;color:var(--white);line-height:1;margin-bottom:8px;}
+.pc-nep{font-family:'Noto Sans Devanagari',sans-serif;font-size:24px;color:var(--gold);margin-bottom:32px;}
+.pc-hand{width:160px;height:180px;margin:0 auto 32px;display:none;}
+.pc-hand.reveal{display:block;animation:fadeIn 0.4s ease;}
+@keyframes fadeIn{from{opacity:0;transform:scale(0.9)}to{opacity:1;transform:scale(1)}}
+.pc-hand svg{width:100%;height:100%;}
+.pc-hint-text{font-size:14px;color:var(--muted-l);line-height:1.6;display:none;margin-bottom:24px;}
+.pc-hint-text.reveal{display:block;}
+.pc-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+.pc-btn{padding:12px 28px;border-radius:8px;border:none;font-size:14px;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s;font-weight:500;}
+.pc-btn.show{background:#1E3A5F;color:var(--blue-ll);border:1px solid #3B82F640;}
+.pc-btn.show:hover{background:#2563EB20;border-color:var(--blue);}
+.pc-btn.got{background:#10B981;color:#fff;}
+.pc-btn.missed{background:#EF4444;color:#fff;}
+.pc-btn.next{background:var(--blue);color:#fff;}
+.pc-score{display:flex;gap:24px;justify-content:center;margin-bottom:32px;}
+.ps-item{text-align:center;}
+.ps-num{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:700;}
+.ps-num.correct{color:#10B981;}
+.ps-num.wrong{color:#EF4444;}
+.ps-num.total{color:var(--blue-l);}
+.ps-label{font-size:11px;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;}
+
+/* QUIZ MODE */
+.quiz-wrap{display:none;}
+.quiz-wrap.active{display:block;}
+.quiz-card{background:var(--bg2);border:1px solid #1E3A5F;border-radius:20px;padding:40px;max-width:700px;margin:0 auto 32px;}
+.qc-q{font-size:13px;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;}
+.qc-num{font-size:11px;color:var(--muted);float:right;}
+.qc-hand{width:140px;height:160px;margin:0 auto 24px;}
+.qc-hand svg{width:100%;height:100%;}
+.qc-prompt{font-size:18px;color:var(--white);text-align:center;margin-bottom:28px;line-height:1.5;}
+.qc-options{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.qc-opt{padding:16px 20px;border:1px solid #1E3A5F;border-radius:10px;background:var(--bg3);color:var(--text);font-size:16px;font-family:'Cormorant Garamond',serif;font-weight:600;cursor:pointer;transition:all 0.2s;text-align:center;}
+.qc-opt:hover:not(.disabled){border-color:var(--blue);background:#1E3A5F30;}
+.qc-opt.correct{border-color:#10B981;background:#10B98120;color:#10B981;}
+.qc-opt.wrong{border-color:#EF4444;background:#EF444420;color:#EF4444;}
+.qc-opt.disabled{cursor:not-allowed;opacity:0.6;}
+.quiz-result{background:var(--bg2);border:1px solid #1E3A5F;border-radius:20px;padding:48px;text-align:center;max-width:600px;margin:0 auto;display:none;}
+.qr-score{font-family:'Cormorant Garamond',serif;font-size:80px;font-weight:700;color:var(--blue-l);margin-bottom:8px;}
+.qr-label{font-size:14px;color:var(--muted-l);margin-bottom:24px;}
+.qr-msg{font-size:18px;color:var(--white);margin-bottom:32px;}
+.btn-p{display:inline-block;background:var(--blue);color:#fff;padding:14px 32px;border-radius:8px;text-decoration:none;font-size:14px;font-weight:500;cursor:pointer;border:none;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.btn-p:hover{background:var(--blue-d);transform:translateY(-1px);}
+.btn-s{display:inline-block;background:transparent;color:var(--blue-ll);padding:14px 32px;border-radius:8px;text-decoration:none;font-size:14px;font-weight:500;cursor:pointer;border:1px solid #3B82F640;font-family:'DM Sans',sans-serif;transition:all 0.2s;}
+.btn-s:hover{border-color:var(--blue);background:#3B82F610;}
+
+/* FOOTER */
+footer{background:#050A10;color:var(--text);padding:40px 6vw 24px;border-top:1px solid #1E3A5F;position:relative;z-index:1;}
+.fbot{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+.fbot p{font-size:11px;color:var(--muted);}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+@media(max-width:900px){
+  .detail-wrap{grid-template-columns:1fr;}
+  .qc-options{grid-template-columns:1fr;}
+  .nav-links{display:none;}
+  .lesson-grid{grid-template-columns:repeat(auto-fill,minmax(90px,1fr));}
+}
+</style>
+</head>
+<body>
+<canvas id="bg-canvas"></canvas>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="index.html" class="nav-logo">
+    <span class="dev">संकेत शिक्षा</span>
+    <span class="eng">SanketSiksha</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="braille.html">Braille</a></li>
+    <li><a href="signlanguage.html" class="active">Sign Language</a></li>
+    <li><a href="teachers.html">For Teachers</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+  <a href="braille.html" class="nav-cta">Braille Trainer →</a>
+</nav>
+
+<!-- HERO -->
+<section class="page-hero reveal">
+  <div class="page-tag">✋ Sign Language</div>
+  <h1 class="page-title">Learn <em>Sign Language</em><br/>One Letter at a Time</h1>
+  <p class="page-nep">हातको भाषामा कुरा गर्नुहोस् — निःशुल्क</p>
+  <p class="page-desc">Master all 26 letters of the fingerspelling alphabet. Watch, practice, and quiz yourself — in both Nepali and English.</p>
+  <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressFill"></div></div>
+  <p class="progress-label" id="progressLabel">0 of 26 letters practiced</p>
+</section>
+
+<!-- MAIN CONTENT -->
+<div class="tabs-wrap">
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('learn',this)">📖 Learn</button>
+    <button class="tab-btn" onclick="switchTab('practice',this)">✋ Practice</button>
+    <button class="tab-btn" onclick="switchTab('quiz',this)">🧠 Quiz</button>
+  </div>
+
+  <!-- LEARN TAB -->
+  <div id="tab-learn">
+    <!-- Letter grid -->
+    <div class="lesson-grid" id="letterGrid"></div>
+
+    <!-- Detail panel -->
+    <div class="detail-wrap" id="detailPanel">
+      <!-- Video -->
+      <div class="video-panel">
+        <div class="video-placeholder">
+          <div class="vp-badge">NSL · Nepal Sign Language</div>
+          <div class="vp-icon">
+            <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="14" stroke="#3B82F6" stroke-width="1.5"/><polygon points="13,10 24,16 13,22" fill="#3B82F6"/></svg>
+          </div>
+          <p class="vp-title" id="vpTitle">Sign for Letter "A"</p>
+          <p class="vp-sub">Video lessons coming soon — contributed by Nepali deaf community members</p>
+        </div>
+        <div class="video-info">
+          <div class="vi-letter" id="viLetter">A</div>
+          <div class="vi-nep" id="viNep">अ</div>
+          <div class="vi-desc" id="viDesc">Fist with thumb resting on the side of the index finger</div>
+          <div class="vi-hint" id="viHint">Curl all fingers into a fist. Thumb presses against the side of the index finger, not over them.</div>
+        </div>
+      </div>
+      <!-- Info -->
+      <div class="info-panel">
+        <div class="ip-hand-big" id="ipHand"></div>
+        <div class="ip-steps">
+          <h4>How to sign it</h4>
+          <div class="step-list" id="stepList"></div>
+        </div>
+        <div class="nav-btns">
+          <button class="nav-btn" onclick="prevLetter()">← Previous</button>
+          <button class="nav-btn primary" onclick="markDone()">Mark Done ✓</button>
+          <button class="nav-btn" onclick="nextLetter()">Next →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRACTICE TAB -->
+  <div id="tab-practice" class="practice-wrap">
+    <div class="pc-score">
+      <div class="ps-item"><div class="ps-num correct" id="pCorrect">0</div><div class="ps-label">Got It</div></div>
+      <div class="ps-item"><div class="ps-num wrong" id="pWrong">0</div><div class="ps-label">Missed</div></div>
+      <div class="ps-item"><div class="ps-num total" id="pTotal">0</div><div class="ps-label">Total</div></div>
+    </div>
+    <div class="practice-card">
+      <p class="pc-prompt">Make this hand sign:</p>
+      <div class="pc-letter" id="pcLetter">A</div>
+      <div class="pc-nep" id="pcNep">अ</div>
+      <div class="pc-hand" id="pcHand"></div>
+      <p class="pc-hint-text" id="pcHintText"></p>
+      <div class="pc-btns" id="pcBtns">
+        <button class="pc-btn show" onclick="showPracticeHint()">👁 Show Hand Shape</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUIZ TAB -->
+  <div id="tab-quiz" class="quiz-wrap">
+    <div class="quiz-card" id="quizCard">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;">
+        <span class="qc-q">Which letter is this hand sign?</span>
+        <span class="qc-num" id="quizNum">1 / 10</span>
+      </div>
+      <div class="qc-hand" id="quizHand"></div>
+      <div class="qc-options" id="quizOptions"></div>
+    </div>
+    <div class="quiz-result" id="quizResult">
+      <div class="qr-score" id="qrScore">8/10</div>
+      <p class="qr-label">Quiz Complete!</p>
+      <p class="qr-msg" id="qrMsg">Great job! Keep practicing to get all 10 right.</p>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+        <button class="btn-p" onclick="startQuiz()">Try Again</button>
+        <button class="btn-s" onclick="switchTab('practice',document.querySelectorAll('.tab-btn')[1])">Go to Practice</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="fbot">
+    <p>© 2025 SanketSiksha — संकेत शिक्षा. All Rights Reserved. Made with ❤️ in Nepal 🇳🇵 · Free forever, no paywalls.</p>
+    <p style="font-size:10px;color:#1E3A5F;">Licensed under CC BY-NC 4.0</p>
+  </div>
+</footer>
+
+<script>
+// ── CANVAS BG ──
+const canvas=document.getElementById('bg-canvas');
+const ctx=canvas.getContext('2d');
+function resizeCanvas(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}
+window.addEventListener('resize',()=>{resizeCanvas();drawBG();});
+function drawBG(){
+  const W=canvas.width,H=canvas.height;
+  ctx.clearRect(0,0,W,H);
+  const g=ctx.createLinearGradient(0,0,W,H);
+  g.addColorStop(0,'#080E17');g.addColorStop(0.5,'#0A1628');g.addColorStop(1,'#080E17');
+  ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  for(let i=0;i<3;i++){
+    const grd=ctx.createRadialGradient(W*(0.2+i*0.3),H*(0.3+i*0.2),0,W*(0.2+i*0.3),H*(0.3+i*0.2),W*0.35);
+    grd.addColorStop(0,i===1?'rgba(240,180,41,0.04)':'rgba(59,130,246,0.06)');
+    grd.addColorStop(1,'transparent');
+    ctx.fillStyle=grd;ctx.fillRect(0,0,W,H);
+  }
+  const spacing=36;
+  const cols=Math.ceil(W/spacing)+1,rows=Math.ceil(H/(spacing*1.4))+1;
+  const patterns=[[1,0,1,0,0,0],[1,1,0,0,0,0],[0,1,1,0,0,0],[1,0,0,1,0,0],[0,0,1,0,1,0],[1,0,0,0,1,1]];
+  let pi=0;
+  for(let c=0;c<cols;c+=3){for(let r=0;r<rows;r+=3){
+    const pat=patterns[pi%patterns.length];pi++;
+    const bx=c*spacing+12,by=r*spacing*1.4+12;
+    for(let dc=0;dc<2;dc++){for(let dr=0;dr<3;dr++){
+      const on=pat[dr*2+dc],dx=bx+dc*13,dy=by+dr*13;
+      if(on){
+        const grd=ctx.createRadialGradient(dx,dy,0,dx,dy,6);
+        grd.addColorStop(0,'rgba(59,130,246,0.28)');grd.addColorStop(1,'rgba(59,130,246,0)');
+        ctx.fillStyle=grd;ctx.beginPath();ctx.arc(dx,dy,6,0,Math.PI*2);ctx.fill();
+        ctx.beginPath();ctx.arc(dx,dy,2.8,0,Math.PI*2);ctx.fillStyle='rgba(96,165,250,0.35)';
+      } else {ctx.beginPath();ctx.arc(dx,dy,1.6,0,Math.PI*2);ctx.fillStyle='rgba(30,58,95,0.4)';}
+      ctx.fill();
+    }}
+  }}
+}
+resizeCanvas();drawBG();
+
+// ── HAND SVGs (same as index) ──
+const C='#93C5FD',O='#1E3A5F',D='#60A5FA';
+const handSVGs={
+A:`<svg viewBox="0 0 60 70" fill="none"><rect x="12" y="28" width="36" height="32" rx="8" fill="${C}" stroke="${O}" stroke-width="1.5"/><rect x="14" y="18" width="8" height="16" rx="4" fill="${C}" stroke="${O}" stroke-width="1.5"/><rect x="24" y="15" width="8" height="18" rx="4" fill="${C}" stroke="${O}" stroke-width="1.5"/><rect x="34" y="16" width="8" height="17" rx="4" fill="${C}" stroke="${O}" stroke-width="1.5"/><rect x="43" y="18" width="7" height="15" rx="3.5" fill="${C}" stroke="${O}" stroke-width="1.5"/><rect x="14" y="28" width="8" height="8" rx="0" fill="${C}"/><rect x="24" y="28" width="8" height="8" rx="0" fill="${C}"/><rect x="34" y="28" width="8" height="8" rx="0" fill="${C}"/><rect x="43" y="28" width="7" height="7" rx="0" fill="${C}"/><rect x="5" y="36" width="12" height="8" rx="4" fill="${C}" stroke="${O}" stroke-width="1.5"/><line x1="14" y1="34" x2="46" y2="34" stroke="${D}" stroke-width="1"/><\/svg>`,
+B:`<svg viewBox="0 0 60 70" fill="none"><rect x="16" y="30" width="32" height="28" rx="6" fill="${C}" stroke="${O}" stroke-width="1.5"/><rect x="16" y="8" width="7" height="26" rx="3.5" fill="${C}" stroke="${O}" stroke-width="1.5"/><rect x="25" y="6" width="7" height="28" rx="3.5" fill="${C}" stroke="${O}" stroke-width="1.5"/><rect x="34" y="7" width="7" height="27" rx="3.5" fill="${C}" stroke="${O}" stroke-width="1.5"/><rect x="43" y="10" width="6" height="24" rx="3" fill="${C}" stroke="${O}" stroke-width="1.5"/><path d="M16 42 Q22 44 28 42" stroke="${O}" stroke-width="1.5" fill="none"/><\/svg>`,
+C:`<svg viewBox="0 0 60 70" fill="none"><path d="M44 12 Q20 8 12 20 Q6 30 10 46 Q14 58 36 62 Q46 64 50 56" stroke="${O}" stroke-width="8" stroke-linecap="round" fill="none"/><path d="M44 12 Q20 8 12 20 Q6 30 10 46 Q14 58 36 62 Q46 64 50 56" stroke="${C}" stroke-width="6" stroke-linecap="round" fill="none"/><\/svg>`,
+D:`<svg viewBox="0 0 60 70" fill="none"><rect x="18" y="28" width="28" height="30" rx="8" fill="${C}" stroke="${O}" stroke-width="1.5"/><rect x="24" y="6" width="9" height="28" rx="4.5" fill="${C}" stroke="${O}" stroke-width="1.5"/><ellipse cx="36" cy="32" rx="10" ry="8" fill="${C}" stroke="${O}" stroke-width="1.5"/><ellipse cx="42" cy="38" rx="7" ry="6" fill="${C}" stroke="${O}" stroke-width="1.5"/><circle cx="17" cy="44" r="4" fill="${C}" stroke="${O}" stroke-width="1.5"/><\/svg>`,
+E:`<svg viewBox="0 0 60 70" fill="none"><rect x="12" y="30" width="36" height="28" rx="7" fill="${C}" stroke="${O}" stroke-width="1.5"/><path d="M14 30 Q16 20 22 22 Q26 24 24 30" fill="${C}" stroke="${O}" stroke-width="1.5"/><path d="M24 30 Q26 18 32 20 Q36 22 34 30" fill="${C}" stroke="${O}" stroke-width="1.5"/><path d="M34 30 Q36 20 42 22 Q46 24 44 30" fill="${C}" stroke="${O}" stroke-width="1.5"/><path d="M8 38 Q8 32 13 32 Q16 32 16 36" stroke="${O}" stroke-width="1.5" fill="${C}"/><line x1="14" y1="30" x2="44" y2="30" stroke="${D}" stroke-width="1.2"/><\/svg>`,
+F:`<svg viewBox="0 0 60 70" fill="none"><rect x="16" y="30" width="30" height="28" rx="7" fill="${C}" stroke="${O}" stroke-width="1.5"/><circle cx="22" cy="28" r="8" fill="${C}" stroke="${O}" stroke-width="1.5"/><rect x="32" y="8" width="7" height="26" rx="3.5" fill="${C}" stroke="${O}" stroke-width="1.5"/><rect x="41" y="10" width="7" height="24" rx="3.5" fill="${C}" stroke="${O}" stroke-width="1.5"/><rect x="50" y="13" width="6" height="21" rx="3" fill="${C}" stroke="${O}" stroke-width="1.5"/><\/svg>`,
+G:`<svg viewBox="0 0 70 60" fill="none"><rect x="16" y="24" width="30" height="24" rx="7" fill="${C}" stroke="${O}" stroke-width="1.5"/><rect x="42" y="26" width="22" height="8" rx="4" fill="${C}" stroke="${O}" stroke-width="1.5"/><rect x="28" y="14" width="8" height="16" rx="4" fill="${C}" stroke="${O}" stroke-width="1.5"/><rect x="18" y="16" width="7" height="13" rx="3.5" fill="${C}" stroke="${O}" stroke-width="1.5"/><rect x="10" y="19" width="6" height="12" rx="3" fill="${C}" stroke="${O}" stroke-width="1.5"/><\/svg>`,
+H:`<svg viewBox="0 0 70 60" fill="none"><rect x="14" y="22" width="30" height="26" rx="7" fill="${C}" stroke="${O}" stroke-width="1.5"/><rect x="40" y="20" width="22" height="8" rx="4" fill="${C}" stroke="${O}" stroke-width="1.5"/><rect x="40" y="29" width="22" height="8" rx="4" fill="${C}" stroke="${O}" stroke-width="1.5"/><rect x="14" y="14" width="7" height="13" rx="3.5" fill="${C}" stroke="${O}" stroke-width="1.5"/><rect x="8" y="17" width="6" height="11" rx="3" fill="${C}" stroke="${O}" stroke-width="1.5"/><\/svg>`,
+I:`<svg viewBox="0 0 60 70" fill="none"><rect x="14" y="30" width="32" height="28" rx="7" fill="${C}" stroke="${O}" stroke-width="1.5"/><path d="M16 30 Q18 20 24 22 Q28 24 26 30" fill="${C}" stroke="${O}" stroke-width="1.5"/><path d="M26 30 Q28 20 34 22 Q38 24 36 30" fill="${C}" stroke="${O}" stroke-width="1.5"/><path d="M36 30 Q38 20 44 22 Q47 24 44 30" fill="${C}" stroke="${O}" stroke-width="1.5"/><rect x="42" y="8" width="7" height="26" rx="3.5" fill="${C}" stroke="${O}" stroke-width="1.5"/><\/svg>`,
+J:`<svg viewBox="0 0 60 70" fill="none"><rect x="14" y="28" width="32" height="28" rx="7" fill="${C}" stroke="${O}" stroke-width="1.5"/><path d="M16 28 Q18 18 24 20 Q28 22 26 28" fill="${C}" stroke="${O}" stroke-width="1.5"/><path d="M26 28 Q28 18 34 20 Q38 22 36 28" fill="${C}" stroke="${O}" stroke-width="1.5"/><path d="M36 28 Q38 18 44 20 Q47 22 44 28" fill="${C}" stroke="${O}" stroke-width="1.5"/><rect x="42" y="6" width="7" height="26" rx="3.5" fill="${C}" stroke="${O}" stroke-width="1.5"/><path d="M49 6 Q56 6 56 14 Q56 22 49 22" stroke="${D}" stroke-width="2" fill="none" stroke-dasharray="3,2"/><polygon points="49,18 45,22 52,22" fill="${D}"/><\/svg>`,
+K:`<svg viewBox="0 0 60 70" fill="none"><rect x="16" y="30" width="28" height="28" rx="7" fill="${C}" stroke="${O}" stroke-width="1.5"/><rect x="22" y="6" width="8" height="28" rx="4" fill="${C}" stroke="${O}" stroke-width="1.5"/><path d="M32 30 L46 14" stroke="${O}" stroke-width="7" stroke-linecap="round"/><path d="M32 30 L46 14" stroke="${C}" stroke-width="5.5" stroke-linecap="round"/><path d="M16 36 L8 26" stroke="${O}" stroke-width="7" stroke-linecap="round"/><path d="M16 36 L8 26" stroke="${C}" stroke-width="5.5" stroke-linecap="round"/><\/svg>`,
+L:`<svg viewBox="0 0 60 70" fill="none"><rect x="20" y="30" width="28" height="28" rx="7" fill="${C}" stroke="${O}" stroke-width="1.5"/><rect x="26" y="6" width="8" height="28" rx="4" fill="${C}" stroke="${O}" stroke-width="1.5"/><rect x="6" y="34" width="20" height="8" rx="4" fill="${C}" stroke="${O}" stroke-width="1.5"/><\/svg>`,
+M:`<svg viewBox="0 0 60 70" fill="none"><rect x="12" y="30" width="36" height="28" rx="7" fill="${C}" stroke="${O}" stroke-width="1.5"/><path d="M14 30 Q16 18 22 20 Q27 22 25 30" fill="${C}" stroke="${O}" stroke-width="1.5"/><path d="M25 30 Q27 17 33 19 Q38 21 36 30" fill="${C}" stroke="${O}" stroke-width="1.5"/><path d="M36 30 Q38 18 44 20 Q48 22 46 30" fill="${C}" stroke="${O}" stroke-width="1.5"/><path d="M8 40 Q7 33 12 33 Q15 33 15 37" stroke="${O}" stroke-width="1.5" fill="${C}"/><\/svg>`,
+N:`<svg viewBox="0 0 60 70" fill="none"><rect x="12" y="30" width="36" height="28" rx="7" fill="${C}" stroke="${O}" stroke-width="1.5"/><path d="M16 30 Q18 18 24 20 Q29 22 27 30" fill="${C}" stroke="${O}" stroke-width="1.5"/><path d="M27 30 Q29 17 35 19 Q40 21 38 30" fill="${C}" stroke="${O}" stroke-width="1.5"/><path d="M8 40 Q7 33 12 33 Q15 33 15 37" stroke="${O}" stroke-width="1.5" fill="${C}"/><\/svg>`,
+O:`<svg viewBox="0 0 60 70" fill="none"><ellipse cx="30" cy="36" rx="18" ry="20" fill="${C}" stroke="${O}" stroke-width="1.5"/><ellipse cx="30" cy="36" rx="10" ry="12" fill="#0D1520" stroke="none"/><rect x="20" y="52" width="20" height="10" rx="5" fill="${C}" stroke="${O}" stroke-width="1.5"/><\/svg>`,
+P:`<svg viewBox="0 0 60 70" fill="none"><rect x="22" y="16" width="16" height="30" rx="7" fill="${C}" stroke="${O}" stroke-width="1.5"/><path d="M28 44 L16 58" stroke="${O}" stroke-width="7" stroke-linecap="round"/><path d="M28 44 L16 58" stroke="${C}" stroke-width="5.5" stroke-linecap="round"/><path d="M32 44 L44 58" stroke="${O}" stroke-width="7" stroke-linecap="round"/><path d="M32 44 L44 58" stroke="${C}" stroke-width="5.5" stroke-linecap="round"/><rect x="8" y="24" width="18" height="8" rx="4" fill="${C}" stroke="${O}" stroke-width="1.5"/><\/svg>`,
+Q:`<svg viewBox="0 0 60 70" fill="none"><rect x="20" y="10" width="20" height="26" rx="7" fill="${C}" stroke="${O}" stroke-width="1.5"/><rect x="28" y="34" width="8" height="22" rx="4" fill="${C}" stroke="${O}" stroke-width="1.5"/><rect x="12" y="38" width="18" height="8" rx="4" fill="${C}" stroke="${O}" stroke-width="1.5"/><\/svg>`,
+R:`<svg viewBox="0 0 60 70" fill="none"><rect x="14" y="32" width="32" height="26" rx="7" fill="${C}" stroke="${O}" stroke-width="1.5"/><path d="M24 32 L20 8" stroke="${O}" stroke-width="8" stroke-linecap="round"/><path d="M24 32 L20 8" stroke="${C}" stroke-width="6.5" stroke-linecap="round"/><path d="M30 32 L34 8" stroke="${O}" stroke-width="8" stroke-linecap="round"/><path d="M30 32 L34 8" stroke="${C}" stroke-width="6.5" stroke-linecap="round"/><path d="M20 18 L34 14" stroke="${O}" stroke-width="2" stroke-linecap="round"/><\/svg>`,
+S:`<svg viewBox="0 0 60 70" fill="none"><rect x="12" y="28" width="36" height="30" rx="8" fill="${C}" stroke="${O}" stroke-width="1.5"/><path d="M14 28 Q16 18 22 20 Q27 22 25 28" fill="${C}" stroke="${O}" stroke-width="1.5"/><path d="M25 28 Q27 17 33 19 Q38 21 36 28" fill="${C}" stroke="${O}" stroke-width="1.5"/><path d="M36 28 Q38 18 44 20 Q48 22 46 28" fill="${C}" stroke="${O}" stroke-width="1.5"/><path d="M8 34 Q6 30 10 28 Q16 26 22 30 Q28 34 36 32 Q44 30 48 32" stroke="${O}" stroke-width="6" stroke-linecap="round" fill="none"/><path d="M8 34 Q6 30 10 28 Q16 26 22 30 Q28 34 36 32 Q44 30 48 32" stroke="${C}" stroke-width="4.5" stroke-linecap="round" fill="none"/><\/svg>`,
+T:`<svg viewBox="0 0 60 70" fill="none"><rect x="12" y="28" width="36" height="30" rx="8" fill="${C}" stroke="${O}" stroke-width="1.5"/><path d="M14 28 Q16 18 22 20 Q27 22 25 28" fill="${C}" stroke="${O}" stroke-width="1.5"/><path d="M25 28 Q27 17 33 19 Q38 21 36 28" fill="${C}" stroke="${O}" stroke-width="1.5"/><path d="M36 28 Q38 18 44 20 Q48 22 46 28" fill="${C}" stroke="${O}" stroke-width="1.5"/><path d="M8 36 Q7 30 12 29 Q17 28 20 32 Q22 35 25 33" stroke="${O}" stroke-width="6" stroke-linecap="round" fill="none"/><path d="M8 36 Q7 30 12 29 Q17 28 20 32 Q22 35 25 33" stroke="${C}" stroke-width="4.5" stroke-linecap="round" fill="none"/><\/svg>`,
+U:`<svg viewBox="0 0 60 70" fill="none"><rect x="14" y="30" width="32" height="28" rx="7" fill="${C}" stroke="${O}" stroke-width="1.5"/><rect x="20" y="6" width="8" height="28" rx="4" fill="${C}" stroke="${O}" stroke-width="1.5"/><rect x="30" y="6" width="8" height="28" rx="4" fill="${C}" stroke="${O}" stroke-width="1.5"/><\/svg>`,
+V:`<svg viewBox="0 0 60 70" fill="none"><rect x="14" y="32" width="32" height="26" rx="7" fill="${C}" stroke="${O}" stroke-width="1.5"/><path d="M24 32 L18 6" stroke="${O}" stroke-width="8" stroke-linecap="round"/><path d="M24 32 L18 6" stroke="${C}" stroke-width="6.5" stroke-linecap="round"/><path d="M30 32 L42 8" stroke="${O}" stroke-width="8" stroke-linecap="round"/><path d="M30 32 L42 8" stroke="${C}" stroke-width="6.5" stroke-linecap="round"/><\/svg>`,
+W:`<svg viewBox="0 0 60 70" fill="none"><rect x="12" y="32" width="36" height="26" rx="7" fill="${C}" stroke="${O}" stroke-width="1.5"/><path d="M18 32 L14 7" stroke="${O}" stroke-width="8" stroke-linecap="round"/><path d="M18 32 L14 7" stroke="${C}" stroke-width="6.5" stroke-linecap="round"/><path d="M28 32 L28 5" stroke="${O}" stroke-width="8" stroke-linecap="round"/><path d="M28 32 L28 5" stroke="${C}" stroke-width="6.5" stroke-linecap="round"/><path d="M38 32 L44 8" stroke="${O}" stroke-width="8" stroke-linecap="round"/><path d="M38 32 L44 8" stroke="${C}" stroke-width="6.5" stroke-linecap="round"/><\/svg>`,
+X:`<svg viewBox="0 0 60 70" fill="none"><rect x="14" y="30" width="32" height="28" rx="7" fill="${C}" stroke="${O}" stroke-width="1.5"/><path d="M26 30 L26 18 Q26 10 32 10 Q38 10 38 18 Q38 24 32 26 Q28 28 28 32" stroke="${O}" stroke-width="7" stroke-linecap="round" fill="none"/><path d="M26 30 L26 18 Q26 10 32 10 Q38 10 38 18 Q38 24 32 26 Q28 28 28 32" stroke="${C}" stroke-width="5.5" stroke-linecap="round" fill="none"/><\/svg>`,
+Y:`<svg viewBox="0 0 60 70" fill="none"><rect x="16" y="28" width="28" height="28" rx="7" fill="${C}" stroke="${O}" stroke-width="1.5"/><rect x="38" y="8" width="7" height="26" rx="3.5" fill="${C}" stroke="${O}" stroke-width="1.5"/><rect x="4" y="34" width="18" height="8" rx="4" fill="${C}" stroke="${O}" stroke-width="1.5"/><\/svg>`,
+Z:`<svg viewBox="0 0 60 70" fill="none"><rect x="14" y="30" width="32" height="28" rx="7" fill="${C}" stroke="${O}" stroke-width="1.5"/><path d="M24 30 L24 18" stroke="${O}" stroke-width="7" stroke-linecap="round"/><path d="M24 30 L24 18" stroke="${C}" stroke-width="5.5" stroke-linecap="round"/><path d="M18 12 L30 12" stroke="${D}" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="2,1"/><path d="M30 12 L18 20" stroke="${D}" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="2,1"/><path d="M18 20 L30 20" stroke="${D}" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="2,1"/><\/svg>`,
+};
+
+// ── SIGN DATA ──
+const signData=[
+  {l:'A',n:'अ',desc:'Fist, thumb rests on side of index finger',hint:'Curl all fingers into a fist. Thumb presses against the side of the index finger, not over them.',steps:['Make a tight fist','Curl all four fingers down','Rest thumb on the side of index finger','Keep thumb visible, not tucked inside']},
+  {l:'B',n:'ब',desc:'Four fingers straight up, thumb folded across palm',hint:'Hold all four fingers straight up and close together. Fold thumb flat across the palm.',steps:['Hold hand upright','Straighten all four fingers together','Press fingers close — no gaps','Fold thumb flat across the palm']},
+  {l:'C',n:'च',desc:'Curved hand forming the letter C',hint:'Curve all fingers and thumb into a C shape, as if holding a large cup.',steps:['Start with open hand','Curve all fingers inward','Curve thumb to match','Shape should look like the letter C']},
+  {l:'D',n:'ड',desc:'Index up, others curl to touch thumb',hint:'Point index finger straight up. Curl middle, ring, and pinky fingers down to meet the tip of the thumb.',steps:['Point index finger straight up','Curl middle, ring, pinky fingers down','Bring those fingertips to touch the thumb','Index stays straight and tall']},
+  {l:'E',n:'इ',desc:'All fingertips bent down touching thumb',hint:'Bend all four fingers at the middle knuckle so fingertips touch the thumb. Like a claw.',steps:['Bend all four fingers at the knuckle','Bring all fingertips forward and down','Touch all fingertips to the thumb','Looks like a claw or bent fingers']},
+  {l:'F',n:'फ',desc:'Index touches thumb in circle, 3 fingers up',hint:'Touch index fingertip to thumb tip forming a circle. Hold middle, ring, pinky straight up.',steps:['Touch index tip to thumb tip to form an O','Hold middle, ring, pinky fingers straight up','Keep those three fingers together','Circle is the key feature of F']},
+  {l:'G',n:'ग',desc:'Index points sideways, thumb parallel below',hint:'Point index finger horizontally to the side. Thumb points the same direction below it.',steps:['Close all fingers except index','Point index finger to the side horizontally','Extend thumb parallel to index, below it','Looks like a sideways pointing gun shape']},
+  {l:'H',n:'ह',desc:'Index and middle together pointing sideways',hint:'Extend index and middle fingers side by side pointing horizontally. Other fingers curled.',steps:['Extend index and middle fingers together','Point them horizontally to the side','Keep them pressed together — no gap','Curl ring and pinky fingers in']},
+  {l:'I',n:'इ',desc:'Pinky raised, all others curled in fist',hint:'Make a fist and raise only the pinky finger straight up.',steps:['Make a fist','Keep all fingers curled','Raise only the pinky finger up','Thumb can rest on curled fingers']},
+  {l:'J',n:'ज',desc:'Pinky up (like I) then trace a J in the air',hint:'Start with the I hand shape, then trace the letter J in the air with your pinky. Motion letter!',steps:['Start with I hand — pinky raised','Move pinky in a downward curve','Hook at the bottom like the letter J','This is a motion letter — always trace the J']},
+  {l:'K',n:'क',desc:'Index up, middle angled out, thumb between',hint:'Hold index finger up and middle finger out at an angle. Thumb points up between them.',steps:['Raise index finger straight up','Extend middle finger out at an angle','Place thumb pointing up between them','Ring and pinky fingers curl in']},
+  {l:'L',n:'ल',desc:'L-shape: thumb out, index finger up',hint:'Extend thumb out to the side and index finger straight up to form an L shape.',steps:['Extend index finger straight up','Extend thumb out to the side','Form a 90° angle between them','Curl the other three fingers in']},
+  {l:'M',n:'म',desc:'Thumb tucked under first three fingers',hint:'Curl index, middle, and ring fingers down over the thumb. Pinky curls in too.',steps:['Make a loose fist','Tuck thumb inside under 3 fingers','Index, middle, ring fingers cover the thumb','Pinky finger curls alongside']},
+  {l:'N',n:'न',desc:'Thumb tucked under first two fingers',hint:'Curl index and middle fingers down over the thumb. Ring and pinky curl in.',steps:['Make a loose fist','Tuck thumb inside under 2 fingers','Only index and middle fingers cover the thumb','Ring and pinky curl in naturally']},
+  {l:'O',n:'ओ',desc:'All fingers and thumb form an O circle',hint:'Round all fingers and thumb to meet at the tips, forming a circle like the letter O.',steps:['Round all fingers inward','Bring all fingertips together','Touch fingertips to the thumb tip','The opening should look like the letter O']},
+  {l:'P',n:'प',desc:'K handshape pointing downward',hint:'Same as K but rotate wrist so fingers point down toward the floor.',steps:['Form the K hand shape','Rotate your wrist downward','Index and middle now point to the floor','Thumb still extends between the two fingers']},
+  {l:'Q',n:'क्',desc:'G handshape pointing downward',hint:'Same as G but rotate wrist so index finger and thumb point downward.',steps:['Form the G hand shape','Rotate wrist so fingers point down','Index and thumb point toward the ground','Other fingers remain curled']},
+  {l:'R',n:'र',desc:'Index and middle fingers crossed',hint:'Cross your middle finger over your index finger while both point upward.',steps:['Extend index and middle fingers up','Cross middle finger over the index finger','Hold them crossed firmly','Other fingers and thumb curl in']},
+  {l:'S',n:'स',desc:'Fist with thumb crossing over all fingers',hint:'Make a fist and fold the thumb across the front of all four fingers.',steps:['Make a firm fist','Fold thumb across the front of all fingers','Thumb rests across — not tucked inside','Different from A — thumb goes all the way across']},
+  {l:'T',n:'त',desc:'Fist with thumb between index and middle',hint:'Make a fist and tuck the thumb up between the index and middle fingers.',steps:['Make a fist','Push thumb up between index and middle finger','Thumb tip should peek out between them','Keep all other fingers curled']},
+  {l:'U',n:'उ',desc:'Index and middle together pointing up',hint:'Hold index and middle fingers up close together (touching). Other fingers and thumb curled.',steps:['Extend index and middle fingers upward','Press them together — touching','Keep ring and pinky curled in','Thumb folds down across other fingers']},
+  {l:'V',n:'व',desc:'Index and middle spread apart in V shape',hint:'Hold index and middle fingers up spread apart in a V. Thumb holds down ring and pinky.',steps:['Extend index and middle fingers upward','Spread them apart into a V shape','Thumb holds down ring and pinky fingers','Classic peace sign or victory sign']},
+  {l:'W',n:'व',desc:'Index, middle, ring spread in three-finger fan',hint:'Hold index, middle, and ring fingers up spread apart. Pinky curled, thumb tucked.',steps:['Extend index, middle, and ring fingers up','Spread them apart like a fan','Keep pinky finger curled in','Thumb tucks down across palm']},
+  {l:'X',n:'ख',desc:'Index finger bent into a hook shape',hint:'Hold one finger up and bend/hook it at the first knuckle, like a beckoning motion.',steps:['Start with index finger pointing up','Bend it at the first knuckle into a hook','Curl other fingers into palm','Looks like a beckoning or hooking gesture']},
+  {l:'Y',n:'य',desc:'Thumb and pinky out, middle three curled',hint:'Extend thumb out to the side and pinky straight up. Curl index, middle, and ring into palm.',steps:['Extend pinky finger straight up','Extend thumb out to the side','Curl index, middle, ring fingers into palm','Shaka or hang-loose shape']},
+  {l:'Z',n:'ज',desc:'Index finger traces Z shape in the air',hint:'Point index finger and trace the letter Z in the air. Motion letter — draw the Z.',steps:['Point index finger forward','Draw a horizontal line to the right','Diagonal line back to the left','Horizontal line to the right again — Z shape']},
+];
+
+let currentIdx=0;
+const donedSet=new Set();
+
+// Build letter grid
+const grid=document.getElementById('letterGrid');
+signData.forEach((d,i)=>{
+  const btn=document.createElement('div');
+  btn.className='letter-btn';
+  btn.id='lb-'+i;
+  btn.innerHTML=`<div class="lb-hand">${handSVGs[d.l]||''}<\/div><span class="lb-char">${d.l}<\/span><span class="lb-nep">${d.n}<\/span>`;
+  btn.addEventListener('click',()=>selectLetter(i));
+  grid.appendChild(btn);
+});
+
+function selectLetter(idx){
+  currentIdx=idx;
+  document.querySelectorAll('.letter-btn').forEach((b,i)=>b.classList.toggle('active',i===idx));
+  const d=signData[idx];
+  document.getElementById('vpTitle').textContent=`Sign for Letter "${d.l}"`;
+  document.getElementById('viLetter').textContent=d.l;
+  document.getElementById('viNep').textContent=d.n;
+  document.getElementById('viDesc').textContent=d.desc;
+  document.getElementById('viHint').textContent=d.hint;
+  document.getElementById('ipHand').innerHTML=`<svg viewBox="${(handSVGs[d.l]||'').match(/viewBox="([^"]+)"/)?.[1]||'0 0 60 70'}" fill="none" xmlns="http://www.w3.org/2000/svg">${(handSVGs[d.l]||'').replace(/<svg[^>]*>/,'').replace('<\/svg>','')}<\/svg>`;
+  const sl=document.getElementById('stepList');
+  sl.innerHTML=d.steps.map((s,i)=>`<div class="step-item"><div class="step-num">${i+1}<\/div><div class="step-text">${s}<\/div><\/div>`).join('');
+}
+
+function nextLetter(){if(currentIdx<signData.length-1)selectLetter(currentIdx+1);}
+function prevLetter(){if(currentIdx>0)selectLetter(currentIdx-1);}
+function markDone(){
+  donedSet.add(currentIdx);
+  document.getElementById('lb-'+currentIdx).classList.add('done');
+  updateProgress();
+  nextLetter();
+}
+function updateProgress(){
+  const pct=Math.round((donedSet.size/26)*100);
+  document.getElementById('progressFill').style.width=pct+'%';
+  document.getElementById('progressLabel').textContent=`${donedSet.size} of 26 letters practiced`;
+}
+
+selectLetter(0);
+
+// ── TABS ──
+function switchTab(tab,btn){
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-learn').style.display=tab==='learn'?'block':'none';
+  document.getElementById('tab-practice').style.display='none';
+  document.getElementById('tab-quiz').style.display='none';
+  if(tab==='practice'){document.getElementById('tab-practice').style.display='block';startPractice();}
+  if(tab==='quiz'){document.getElementById('tab-quiz').style.display='block';startQuiz();}
+}
+
+// ── PRACTICE ──
+let pQueue=[],pCorrect=0,pWrong=0,pTotal=0,pRevealed=false;
+function shuffle(arr){return [...arr].sort(()=>Math.random()-0.5);}
+
+function startPractice(){
+  pQueue=shuffle(signData.map((_,i)=>i));
+  pCorrect=0;pWrong=0;pTotal=0;
+  updatePracticeScore();
+  showPracticeLetter();
+}
+
+function showPracticeLetter(){
+  if(!pQueue.length)pQueue=shuffle(signData.map((_,i)=>i));
+  const idx=pQueue.shift();
+  const d=signData[idx];
+  document.getElementById('pcLetter').textContent=d.l;
+  document.getElementById('pcNep').textContent=d.n;
+  const hand=document.getElementById('pcHand');
+  hand.innerHTML=`<svg viewBox="${(handSVGs[d.l]||'').match(/viewBox="([^"]+)"/)?.[1]||'0 0 60 70'}" fill="none">${(handSVGs[d.l]||'').replace(/<svg[^>]*>/,'').replace('<\/svg>','')}<\/svg>`;
+  hand.classList.remove('reveal');
+  document.getElementById('pcHintText').textContent=d.hint;
+  document.getElementById('pcHintText').classList.remove('reveal');
+  document.getElementById('pcBtns').innerHTML=`<button class="pc-btn show" onclick="showPracticeHint()">👁 Show Hand Shape<\/button>`;
+  pRevealed=false;
+}
+
+function showPracticeHint(){
+  document.getElementById('pcHand').classList.add('reveal');
+  document.getElementById('pcHintText').classList.add('reveal');
+  pRevealed=true;
+  document.getElementById('pcBtns').innerHTML=`
+    <button class="pc-btn got" onclick="practiceMark(true)">✓ Got It<\/button>
+    <button class="pc-btn missed" onclick="practiceMark(false)">✗ Need More Practice<\/button>
+  `;
+}
+
+function practiceMark(got){
+  pTotal++;
+  if(got)pCorrect++;else pWrong++;
+  updatePracticeScore();
+  showPracticeLetter();
+}
+
+function updatePracticeScore(){
+  document.getElementById('pCorrect').textContent=pCorrect;
+  document.getElementById('pWrong').textContent=pWrong;
+  document.getElementById('pTotal').textContent=pTotal;
+}
+
+// ── QUIZ ──
+let quizQ=[],quizIdx=0,quizScore=0;
+function startQuiz(){
+  document.getElementById('quizCard').style.display='block';
+  document.getElementById('quizResult').style.display='none';
+  quizQ=shuffle(signData.map((_,i)=>i)).slice(0,10);
+  quizIdx=0;quizScore=0;
+  showQuizQ();
+}
+
+function showQuizQ(){
+  if(quizIdx>=quizQ.length){showQuizResult();return;}
+  const correct=quizQ[quizIdx];
+  const d=signData[correct];
+  document.getElementById('quizNum').textContent=`${quizIdx+1} / ${quizQ.length}`;
+  document.getElementById('quizHand').innerHTML=`<svg viewBox="${(handSVGs[d.l]||'').match(/viewBox="([^"]+)"/)?.[1]||'0 0 60 70'}" fill="none">${(handSVGs[d.l]||'').replace(/<svg[^>]*>/,'').replace('<\/svg>','')}<\/svg>`;
+  // 4 options: correct + 3 random wrong
+  const wrongs=shuffle(signData.map((_,i)=>i).filter(i=>i!==correct)).slice(0,3);
+  const opts=shuffle([correct,...wrongs]);
+  document.getElementById('quizOptions').innerHTML=opts.map(i=>`
+    <button class="qc-opt" onclick="answerQuiz(${i},${correct},this)">${signData[i].l} — ${signData[i].n}<\/button>
+  `).join('');
+}
+
+function answerQuiz(chosen,correct,btn){
+  document.querySelectorAll('.qc-opt').forEach(b=>b.classList.add('disabled'));
+  if(chosen===correct){btn.classList.add('correct');quizScore++;}
+  else{
+    btn.classList.add('wrong');
+    document.querySelectorAll('.qc-opt').forEach(b=>{
+      const letter=b.textContent.trim().split(' ')[0];
+      if(letter===signData[correct].l)b.classList.add('correct');
+    });
+  }
+  setTimeout(()=>{quizIdx++;showQuizQ();},1200);
+}
+
+function showQuizResult(){
+  document.getElementById('quizCard').style.display='none';
+  const r=document.getElementById('quizResult');
+  r.style.display='block';
+  document.getElementById('qrScore').textContent=`${quizScore}/10`;
+  const msgs=['Keep practicing! You\'re learning! 💪','Getting there! Review the harder ones. 📖','Good job! Keep going! 🌟','Great work! Almost perfect! 🎉','Perfect score! You\'re a signing pro! 🏆'];
+  document.getElementById('qrMsg').textContent=msgs[Math.min(Math.floor(quizScore/2),4)];
+}
+
+// ── NAV SCROLL ──
+window.addEventListener('scroll',()=>document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>40));
+
+// ── REVEAL ──
+const obs=new IntersectionObserver(e=>{e.forEach(el=>{if(el.isIntersecting)el.target.classList.add('visible');});},{threshold:0.08});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+window.addEventListener('load',()=>{resizeCanvas();drawBG();});
+</script>
+</body>
+</html>
