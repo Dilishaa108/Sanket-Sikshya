@@ -57,16 +57,58 @@ nav.scrolled{box-shadow:0 2px 40px #00000060;}
 .type-word-input:focus{border-color:var(--gold);}
 .type-result-panel{background:var(--bg2);border:1px solid #1E3A5F;border-radius:20px;padding:36px;}
 .braille-display{display:flex;flex-direction:column;align-items:center;gap:12px;}
-.big-cell-wrap{display:flex;align-items:center;gap:24px;}
-.big-cell{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:24px;background:var(--bg3);border-radius:16px;border:1px solid #1E3A5F;}
-.big-dot{width:36px;height:36px;border-radius:50%;cursor:pointer;transition:all 0.25s;position:relative;}
-.big-dot.on{background:var(--dot-on);box-shadow:0 0 18px #3B82F680;}
-.big-dot.off{background:var(--dot-off);border:2px solid #1E3A5F60;}
-.big-dot:hover{transform:scale(1.12);}
-.cell-info{text-align:center;}
-.cell-letter{font-family:'Cormorant Garamond',serif;font-size:64px;font-weight:700;color:var(--white);line-height:1;}
-.cell-nep{font-family:'Noto Sans Devanagari',sans-serif;font-size:22px;color:var(--gold);margin-top:4px;}
-.cell-dots-label{font-size:11px;color:var(--muted);margin-top:8px;letter-spacing:0.08em;}
+/* Big Braille Cell - column-first layout (left col top-to-bottom, then right col) */
+.big-cell-wrap{display:flex;align-items:center;gap:32px;}
+.big-cell{
+  display:grid;
+  /* 2 columns, 3 rows — left col = dots 1,2,3 — right col = dots 4,5,6 */
+  grid-template-columns:1fr 1fr;
+  grid-template-rows:1fr 1fr 1fr;
+  gap:16px;
+  padding:28px 24px;
+  background:var(--bg3);
+  border-radius:20px;
+  border:1px solid #1E3A5F;
+}
+.big-dot{
+  width:44px;height:44px;border-radius:50%;
+  cursor:pointer;
+  transition:background 0.18s, box-shadow 0.18s, transform 0.12s;
+  position:relative;
+  user-select:none;
+}
+.big-dot.on{
+  background:var(--dot-on);
+  box-shadow:0 0 22px #3B82F6AA, 0 0 6px #3B82F6;
+}
+.big-dot.off{
+  background:var(--dot-off);
+  border:2px solid #2A4A6A;
+}
+.big-dot:hover{ transform:scale(1.18); }
+.big-dot:active{ transform:scale(0.95); }
+/* Dot number labels inside each dot */
+.big-dot::after{
+  content: attr(data-num);
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:11px;
+  font-weight:700;
+  color:rgba(255,255,255,0.35);
+  pointer-events:none;
+}
+.big-dot.on::after{ color:rgba(255,255,255,0.7); }
+.cell-info{text-align:center;min-width:120px;}
+.cell-letter{
+  font-family:'Cormorant Garamond',serif;
+  font-size:80px;font-weight:700;color:var(--white);line-height:1;
+  transition:transform 0.15s ease, color 0.2s ease;
+}
+.cell-nep{font-family:'Noto Sans Devanagari',sans-serif;font-size:24px;color:var(--gold);margin-top:4px;transition:color 0.2s;}
+.cell-dots-label{font-size:11px;color:var(--muted);margin-top:10px;letter-spacing:0.06em;line-height:1.5;max-width:160px;}
 .word-display{display:flex;flex-wrap:wrap;gap:16px;justify-content:center;margin-top:20px;min-height:80px;align-items:center;}
 .word-cell-group{display:flex;flex-direction:column;align-items:center;gap:6px;}
 .word-cell{display:grid;grid-template-columns:1fr 1fr;gap:5px;}
@@ -204,22 +246,34 @@ footer{background:#050A10;color:var(--text);padding:40px 6vw 24px;border-top:1px
       </div>
       <div class="type-result-panel">
         <div class="braille-display">
+          <p style="font-size:11px;color:var(--blue-ll);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:4px;">👆 Click any dot to toggle — letter updates live</p>
           <div class="big-cell-wrap">
             <div class="big-cell" id="bigCell">
-              <div class="big-dot off" id="d0"></div>
-              <div class="big-dot off" id="d1"></div>
-              <div class="big-dot off" id="d2"></div>
-              <div class="big-dot off" id="d3"></div>
-              <div class="big-dot off" id="d4"></div>
-              <div class="big-dot off" id="d5"></div>
+              <!--
+                Braille standard: left column = dots 1,2,3 (top to bottom)
+                                  right column = dots 4,5,6 (top to bottom)
+                CSS grid fills left-to-right per row, so we place them as:
+                row1: dot1(col-left) | dot4(col-right)
+                row2: dot2(col-left) | dot5(col-right)
+                row3: dot3(col-left) | dot6(col-right)
+                data-pos matches the brailleData pattern array index:
+                p[0]=dot1, p[1]=dot2, p[2]=dot3, p[3]=dot4, p[4]=dot5, p[5]=dot6
+              -->
+              <div class="big-dot off" id="d0" data-pos="0" data-num="1"></div>
+              <div class="big-dot off" id="d3" data-pos="3" data-num="4"></div>
+              <div class="big-dot off" id="d1" data-pos="1" data-num="2"></div>
+              <div class="big-dot off" id="d4" data-pos="4" data-num="5"></div>
+              <div class="big-dot off" id="d2" data-pos="2" data-num="3"></div>
+              <div class="big-dot off" id="d5" data-pos="5" data-num="6"></div>
             </div>
             <div class="cell-info">
-              <div class="cell-letter" id="cellLetter">A</div>
-              <div class="cell-nep" id="cellNep">अ</div>
-              <div class="cell-dots-label" id="cellDotsLabel">Dots 1 raised · Position: top-left</div>
+              <div class="cell-letter" id="cellLetter">·</div>
+              <div class="cell-nep" id="cellNep">—</div>
+              <div class="cell-dots-label" id="cellDotsLabel">Click any dot to start — letter appears live</div>
             </div>
           </div>
           <div class="word-display" id="wordDisplay"></div>
+          <button onclick="resetDots()" style="margin-top:12px;background:transparent;border:1px solid #1E3A5F;border-radius:8px;padding:8px 20px;font-size:12px;color:var(--muted-l);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;" onmouseover="this.style.borderColor='var(--blue)';this.style.color='var(--white)'" onmouseout="this.style.borderColor='#1E3A5F';this.style.color='var(--muted-l)'">⟳ Reset Dots</button>
         </div>
       </div>
     </div>
@@ -373,19 +427,9 @@ const brailleData=[
 
 const dotPositionNames=['Top-left','Middle-left','Bottom-left','Top-right','Middle-right','Bottom-right'];
 
-function updateBigCell(pattern,letter,nep,dotsLabel){
-  pattern.forEach((v,i)=>{
-    const d=document.getElementById('d'+i);
-    d.className='big-dot '+(v?'on':'off');
-  });
-  document.getElementById('cellLetter').textContent=letter;
-  document.getElementById('cellNep').textContent=nep;
-  const raisedDots=pattern.map((v,i)=>v?dotPositionNames[i]:null).filter(Boolean);
-  document.getElementById('cellDotsLabel').textContent=dotsLabel+' · '+raisedDots.join(', ');
-}
-
-// Initialize with A
-updateBigCell(brailleData[0].p,'A','अ',brailleData[0].dots);
+// Initialize with empty cell — user clicks dots to discover letters
+// (typing a letter will set it, or click alphabet grid)
+detectLetterFromDots();
 
 // ── LETTER INPUT ──
 document.getElementById('letterInput').addEventListener('input',function(){
@@ -426,13 +470,88 @@ document.getElementById('wordInput').addEventListener('input',function(){
   document.getElementById('letterInput').value='';
 });
 
-// Big dot toggle (interactive)
-document.querySelectorAll('.big-dot').forEach((dot,i)=>{
-  dot.addEventListener('click',()=>{
+// Read pattern from dots using data-pos attribute (correct Braille ordering)
+function readDotPattern() {
+  var pattern = [0,0,0,0,0,0];
+  document.querySelectorAll('.big-dot').forEach(function(dot) {
+    var pos = parseInt(dot.getAttribute('data-pos'));
+    pattern[pos] = dot.classList.contains('on') ? 1 : 0;
+  });
+  return pattern;
+}
+
+// Set dot states from a pattern array
+function setDotPattern(pattern) {
+  document.querySelectorAll('.big-dot').forEach(function(dot) {
+    var pos = parseInt(dot.getAttribute('data-pos'));
+    var on = pattern[pos] === 1;
+    dot.className = 'big-dot ' + (on ? 'on' : 'off');
+  });
+}
+
+var dotNumberNames = ['Dot 1 (top-left)','Dot 2 (mid-left)','Dot 3 (bot-left)','Dot 4 (top-right)','Dot 5 (mid-right)','Dot 6 (bot-right)'];
+
+function updateBigCell(pattern, letter, nep, dotsLabel) {
+  setDotPattern(pattern);
+  var letterEl = document.getElementById('cellLetter');
+  letterEl.textContent = letter;
+  letterEl.style.color = 'var(--white)';
+  document.getElementById('cellNep').textContent = nep;
+  var raisedNames = pattern.map(function(v,i){ return v ? dotNumberNames[i] : null; }).filter(Boolean);
+  document.getElementById('cellDotsLabel').textContent = dotsLabel + (raisedNames.length ? ' · ' + raisedNames.join(', ') : '');
+}
+
+// Live letter detection when dots are clicked
+function detectLetterFromDots() {
+  var pattern = readDotPattern();
+  var letterEl = document.getElementById('cellLetter');
+  var nepEl = document.getElementById('cellNep');
+  var labelEl = document.getElementById('cellDotsLabel');
+
+  var match = brailleData.find(function(d) {
+    return d.p.every(function(v,i){ return v === pattern[i]; });
+  });
+
+  var raisedCount = pattern.filter(function(v){ return v===1; }).length;
+  var raisedNames = pattern.map(function(v,i){ return v ? dotNumberNames[i] : null; }).filter(Boolean);
+
+  if (match) {
+    letterEl.textContent = match.l;
+    letterEl.style.color = 'var(--white)';
+    nepEl.textContent = match.n;
+    labelEl.textContent = match.dots + ' · ' + raisedNames.join(', ');
+    // Pop animation
+    letterEl.style.transform = 'scale(1.25)';
+    setTimeout(function(){ letterEl.style.transform = 'scale(1)'; }, 180);
+  } else if (raisedCount === 0) {
+    letterEl.textContent = '·';
+    letterEl.style.color = 'var(--muted)';
+    nepEl.textContent = '—';
+    labelEl.textContent = 'Click dots to form a letter — it appears here live';
+  } else {
+    letterEl.textContent = '?';
+    letterEl.style.color = 'var(--muted-l)';
+    nepEl.textContent = '—';
+    labelEl.textContent = raisedCount + ' dot(s): ' + raisedNames.join(', ') + ' — not a standard Braille letter';
+  }
+}
+
+// Attach click handlers to dots
+document.querySelectorAll('.big-dot').forEach(function(dot) {
+  dot.addEventListener('click', function() {
     dot.classList.toggle('on');
     dot.classList.toggle('off');
+    detectLetterFromDots();
   });
 });
+
+// Also add a "Reset dots" button behavior — clear all dots
+function resetDots() {
+  document.querySelectorAll('.big-dot').forEach(function(dot){
+    dot.className = 'big-dot off';
+  });
+  detectLetterFromDots();
+}
 
 // ── ALPHABET GRID ──
 const blGrid=document.getElementById('blGrid');

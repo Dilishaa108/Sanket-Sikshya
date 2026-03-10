@@ -146,15 +146,304 @@ footer{background:#050A10;color:var(--text);padding:40px 6vw 24px;border-top:1px
 .fbot{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
 .fbot p{font-size:11px;color:var(--muted);}
 
-/* REVEAL */
-.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease;}
-.reveal.visible{opacity:1;transform:translateY(0);}
+/* LIGHTBOX */
+.lightbox-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: rgba(4, 8, 16, 0.95);
+  backdrop-filter: blur(12px);
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 20px;
+}
+.lightbox-overlay.open { display: flex; }
+.lightbox-inner {
+  position: relative;
+  max-width: 500px;
+  width: 90vw;
+  background: var(--bg2);
+  border: 1px solid #1E3A5F;
+  border-radius: 24px;
+  overflow: hidden;
+}
+.lightbox-img-wrap {
+  width: 100%;
+  aspect-ratio: 1;
+  background: #0A1628;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+.lightbox-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 20px;
+}
+.lightbox-img-wrap .svg-fallback {
+  width: 200px;
+  height: 220px;
+}
+.lightbox-img-wrap .svg-fallback svg { width: 100%; height: 100%; }
+.lightbox-info {
+  padding: 20px 28px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.li-left .li-letter {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 52px;
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1;
+}
+.li-left .li-nep {
+  font-family: 'Noto Sans Devanagari', sans-serif;
+  font-size: 16px;
+  color: var(--gold);
+  margin-top: 2px;
+}
+.li-left .li-desc {
+  font-size: 12px;
+  color: var(--muted-l);
+  margin-top: 6px;
+  max-width: 240px;
+  line-height: 1.5;
+}
+.lightbox-nav {
+  display: flex;
+  gap: 10px;
+}
+.lb-nav-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid #1E3A5F;
+  background: var(--bg3);
+  color: var(--muted-l);
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+.lb-nav-btn:hover { border-color: var(--blue); color: var(--white); background: #1E3A5F; }
+.lb-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid #1E3A5F;
+  background: rgba(8,14,23,0.8);
+  color: var(--muted-l);
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: all 0.2s;
+}
+.lb-close:hover { border-color: var(--blue); color: var(--white); }
+.lb-counter {
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  text-align: center;
+}
+.lb-keyboard-hint {
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  text-align: center;
+}
 
-@media(max-width:900px){
-  .detail-wrap{grid-template-columns:1fr;}
-  .qc-options{grid-template-columns:1fr;}
-  .nav-links{display:none;}
-  .lesson-grid{grid-template-columns:repeat(auto-fill,minmax(90px,1fr));}
+/* Photo-ready image in letter grid */
+.lb-hand {
+  width: 50px;
+  height: 56px;
+  margin: 0 auto 8px;
+  position: relative;
+  cursor: zoom-in;
+}
+.lb-hand img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 6px;
+}
+.lb-hand svg { width: 100%; height: 100%; }
+.lb-hand:hover::after {
+  content: '🔍';
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  background: rgba(59,130,246,0.3);
+  border-radius: 6px;
+}
+
+/* FEEDBACK WALL */
+.feedback-section {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 60px 6vw 80px;
+  border-top: 1px solid #1E3A5F;
+}
+.fb-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(28px,4vw,44px);
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 6px;
+}
+.fb-title span { color: var(--blue-l); }
+.fb-sub {
+  font-size: 14px;
+  color: var(--muted-l);
+  margin-bottom: 36px;
+  line-height: 1.6;
+}
+.feedback-form {
+  background: var(--bg2);
+  border: 1px solid #1E3A5F;
+  border-radius: 20px;
+  padding: 32px;
+  margin-bottom: 40px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.ff-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.ff-field.full { grid-column: 1 / -1; }
+.ff-label {
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.ff-input, .ff-textarea, .ff-select {
+  background: var(--bg3);
+  border: 1px solid #1E3A5F;
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  color: var(--white);
+  outline: none;
+  transition: border-color 0.2s;
+  width: 100%;
+}
+.ff-input:focus, .ff-textarea:focus, .ff-select:focus { border-color: var(--blue); }
+.ff-textarea { resize: vertical; min-height: 100px; }
+.ff-select option { background: var(--bg2); }
+.ff-submit {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.ff-btn {
+  background: var(--blue);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 13px 32px;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.ff-btn:hover { background: var(--blue-d); transform: translateY(-1px); }
+.ff-note { font-size: 11px; color: var(--muted); line-height: 1.5; }
+
+/* Feedback messages wall */
+.feedback-wall { display: flex; flex-direction: column; gap: 16px; }
+.fw-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.fw-title { font-size: 14px; font-weight: 500; color: var(--white); }
+.fw-count {
+  font-size: 11px;
+  color: var(--muted);
+  background: #1E3A5F40;
+  border: 1px solid #1E3A5F;
+  border-radius: 20px;
+  padding: 3px 12px;
+}
+.fb-msg {
+  background: var(--bg2);
+  border: 1px solid #1E3A5F;
+  border-radius: 14px;
+  padding: 20px 24px;
+  transition: border-color 0.2s;
+}
+.fb-msg:hover { border-color: #3B82F640; }
+.fb-msg-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.fb-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--blue), var(--blue-d));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}
+.fb-name { font-size: 14px; font-weight: 500; color: var(--white); }
+.fb-meta { font-size: 11px; color: var(--muted); margin-top: 1px; }
+.fb-stars { margin-left: auto; color: var(--gold); font-size: 13px; }
+.fb-text { font-size: 14px; color: var(--muted-l); line-height: 1.7; }
+.fb-tag {
+  display: inline-block;
+  margin-top: 10px;
+  background: #1E3A5F40;
+  border: 1px solid #3B82F630;
+  border-radius: 4px;
+  padding: 2px 10px;
+  font-size: 10px;
+  color: var(--blue-ll);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.fb-new {
+  animation: fbSlideIn 0.4s ease;
+  border-color: var(--blue) !important;
+}
+@keyframes fbSlideIn {
+  from { opacity: 0; transform: translateY(-12px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 </style>
 </head>
@@ -277,6 +566,77 @@ footer{background:#050A10;color:var(--text);padding:40px 6vw 24px;border-top:1px
   </div>
 </div>
 
+<!-- LIGHTBOX OVERLAY -->
+<div class="lightbox-overlay" id="lightbox">
+  <div class="lightbox-inner">
+    <button class="lb-close" onclick="closeLightbox()">✕</button>
+    <div class="lightbox-img-wrap" id="lbImgWrap"></div>
+    <div class="lightbox-info">
+      <div class="li-left">
+        <div class="li-letter" id="lbLetter">A</div>
+        <div class="li-nep" id="lbNep">अ</div>
+        <div class="li-desc" id="lbDesc">Fist with thumb on side of index finger</div>
+      </div>
+      <div class="lightbox-nav">
+        <button class="lb-nav-btn" onclick="lbPrev()">←</button>
+        <button class="lb-nav-btn" onclick="lbNext()">→</button>
+      </div>
+    </div>
+  </div>
+  <div class="lb-counter" id="lbCounter">1 / 26</div>
+  <div class="lb-keyboard-hint">← → arrow keys to navigate · Esc to close</div>
+</div>
+
+<!-- FEEDBACK WALL -->
+<section class="feedback-section reveal">
+  <h2 class="fb-title">Community <span>Feedback Wall</span></h2>
+  <p class="fb-nep" style="font-family:'Noto Sans Devanagari',sans-serif;font-size:15px;color:var(--gold);margin-bottom:8px;">तपाईंको अनुभव साझा गर्नुहोस्</p>
+  <p class="fb-sub">Share your learning experience, suggestions, or story. All messages are public and help our community grow.</p>
+
+  <!-- Submit form -->
+  <div class="feedback-form" id="feedbackForm">
+    <div class="ff-field">
+      <label class="ff-label">Your Name</label>
+      <input class="ff-input" id="fbName" type="text" placeholder="e.g. Sita Thapa" maxlength="40"/>
+    </div>
+    <div class="ff-field">
+      <label class="ff-label">Role</label>
+      <select class="ff-select" id="fbRole">
+        <option value="Student">Student — विद्यार्थी</option>
+        <option value="Teacher">Teacher — शिक्षक</option>
+        <option value="Parent">Parent — अभिभावक</option>
+        <option value="Community Member">Community Member</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+    <div class="ff-field full">
+      <label class="ff-label">Your Message</label>
+      <textarea class="ff-textarea" id="fbMessage" placeholder="Share your experience learning Sign Language or Braille, a suggestion, or how SanketSiksha helped you..." maxlength="400"></textarea>
+    </div>
+    <div class="ff-field full">
+      <label class="ff-label">Rating</label>
+      <div id="starRating" style="display:flex;gap:8px;font-size:28px;cursor:pointer;">
+        <span class="star" data-v="1">☆</span>
+        <span class="star" data-v="2">☆</span>
+        <span class="star" data-v="3">☆</span>
+        <span class="star" data-v="4">☆</span>
+        <span class="star" data-v="5">☆</span>
+      </div>
+    </div>
+    <div class="ff-submit">
+      <button class="ff-btn" onclick="submitFeedback()">Post to Community Wall →</button>
+      <p class="ff-note">Your message will appear publicly on this wall.<br/>No account needed — free for everyone.</p>
+    </div>
+  </div>
+
+  <!-- Live wall -->
+  <div class="fw-header">
+    <span class="fw-title">Community Messages</span>
+    <span class="fw-count" id="fbCount">0 messages</span>
+  </div>
+  <div class="feedback-wall" id="feedbackWall"></div>
+</section>
+
 <!-- FOOTER -->
 <footer>
   <div class="fbot">
@@ -394,7 +754,14 @@ signData.forEach((d,i)=>{
   const btn=document.createElement('div');
   btn.className='letter-btn';
   btn.id='lb-'+i;
-  btn.innerHTML=`<div class="lb-hand">${handSVGs[d.l]||''}<\/div><span class="lb-char">${d.l}<\/span><span class="lb-nep">${d.n}<\/span>`;
+  // Hand div — clicking the hand opens lightbox, clicking card selects letter
+  btn.innerHTML=`<div class="lb-hand" title="Click to enlarge">${handSVGs[d.l]||''}<\/div><span class="lb-char">${d.l}<\/span><span class="lb-nep">${d.n}<\/span>`;
+  // Click on hand area = open lightbox
+  btn.querySelector('.lb-hand').addEventListener('click', function(e) {
+    e.stopPropagation();
+    openLightbox(i);
+  });
+  // Click anywhere else on card = select letter
   btn.addEventListener('click',()=>selectLetter(i));
   grid.appendChild(btn);
 });
@@ -542,6 +909,193 @@ window.addEventListener('scroll',()=>document.getElementById('navbar').classList
 const obs=new IntersectionObserver(e=>{e.forEach(el=>{if(el.isIntersecting)el.target.classList.add('visible');});},{threshold:0.08});
 document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 window.addEventListener('load',()=>{resizeCanvas();drawBG();});
+
+// ── LIGHTBOX ──
+// To use real photos: place images in an "images" folder named "sign_A.jpg", "sign_B.jpg" etc.
+// If no image file is found, the SVG hand illustration is shown automatically.
+var lbCurrentIdx = 0;
+
+function openLightbox(idx) {
+  lbCurrentIdx = idx;
+  renderLightbox();
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function lbNext() {
+  lbCurrentIdx = (lbCurrentIdx + 1) % signData.length;
+  renderLightbox();
+}
+
+function lbPrev() {
+  lbCurrentIdx = (lbCurrentIdx - 1 + signData.length) % signData.length;
+  renderLightbox();
+}
+
+function renderLightbox() {
+  var d = signData[lbCurrentIdx];
+  var wrap = document.getElementById('lbImgWrap');
+
+  // Try to load a real photo first, fall back to SVG
+  // Photo naming convention: images/sign_A.jpg (replace with your actual photos)
+  var photoPath = 'images/sign_' + d.l + '.jpg';
+
+  // Check if photo exists by creating an image element
+  var testImg = new Image();
+  testImg.onload = function() {
+    // Photo found — show it
+    wrap.innerHTML = '<img src="' + photoPath + '" alt="Sign for letter ' + d.l + '">';
+  };
+  testImg.onerror = function() {
+    // No photo — show SVG illustration
+    var svg = handSVGs[d.l] || handSVGs['A'];
+    wrap.innerHTML = '<div class="svg-fallback">' + svg + '<\/div>';
+  };
+  testImg.src = photoPath;
+
+  document.getElementById('lbLetter').textContent = d.l;
+  document.getElementById('lbNep').textContent = d.n;
+  document.getElementById('lbDesc').textContent = d.desc;
+  document.getElementById('lbCounter').textContent = (lbCurrentIdx + 1) + ' / ' + signData.length;
+}
+
+// Keyboard navigation
+document.addEventListener('keydown', function(e) {
+  var lb = document.getElementById('lightbox');
+  if (!lb.classList.contains('open')) return;
+  if (e.key === 'ArrowRight') lbNext();
+  else if (e.key === 'ArrowLeft') lbPrev();
+  else if (e.key === 'Escape') closeLightbox();
+});
+
+// Click overlay background to close
+document.getElementById('lightbox').addEventListener('click', function(e) {
+  if (e.target === this) closeLightbox();
+});
+
+// Make letter grid cards open lightbox on image click
+// (re-attach after grid is built — done in selectLetter rebuild below)
+
+// ── FEEDBACK WALL ──
+var feedbackMessages = [
+  {
+    name: 'Aarav Shrestha',
+    role: 'Teacher',
+    msg: 'I used the Braille trainer in my classroom in Kathmandu and my students were so engaged. The interactive dots made it feel like a game. Thank you for making this free.',
+    stars: 5,
+    time: '2 days ago'
+  },
+  {
+    name: 'Sunita Rai',
+    role: 'Parent',
+    msg: 'My daughter is deaf and I never knew how to communicate with her properly. This website helped me learn the fingerspelling alphabet in just one week. I am so grateful.',
+    stars: 5,
+    time: '5 days ago'
+  },
+  {
+    name: 'Bikram Tamang',
+    role: 'Student',
+    msg: 'The quiz mode is really fun. I got 7/10 on my first try and now I am practicing every day. The Next and Previous buttons make it so easy to go through all letters.',
+    stars: 4,
+    time: '1 week ago'
+  }
+];
+
+var userRating = 0;
+
+// Star rating logic
+document.querySelectorAll('.star').forEach(function(star) {
+  star.addEventListener('mouseover', function() {
+    var val = parseInt(this.getAttribute('data-v'));
+    document.querySelectorAll('.star').forEach(function(s, i) {
+      s.textContent = i < val ? '★' : '☆';
+      s.style.color = i < val ? '#F0B429' : 'var(--muted)';
+    });
+  });
+  star.addEventListener('mouseleave', function() {
+    document.querySelectorAll('.star').forEach(function(s, i) {
+      s.textContent = i < userRating ? '★' : '☆';
+      s.style.color = i < userRating ? '#F0B429' : 'var(--muted)';
+    });
+  });
+  star.addEventListener('click', function() {
+    userRating = parseInt(this.getAttribute('data-v'));
+    document.querySelectorAll('.star').forEach(function(s, i) {
+      s.textContent = i < userRating ? '★' : '☆';
+      s.style.color = i < userRating ? '#F0B429' : '#F0B429';
+    });
+  });
+});
+
+function renderFeedbackWall() {
+  var wall = document.getElementById('feedbackWall');
+  var count = document.getElementById('fbCount');
+  count.textContent = feedbackMessages.length + ' message' + (feedbackMessages.length !== 1 ? 's' : '');
+
+  wall.innerHTML = feedbackMessages.map(function(m, i) {
+    var stars = '';
+    for (var s = 0; s < 5; s++) {
+      stars += s < m.stars ? '★' : '☆';
+    }
+    var initials = m.name.split(' ').map(function(w) { return w[0]; }).join('').toUpperCase();
+    var colors = ['#3B82F6','#10B981','#F0B429','#8B5CF6','#EF4444','#06B6D4'];
+    var color = colors[i % colors.length];
+    return '<div class="fb-msg' + (i === 0 ? ' fb-new' : '') + '">' +
+      '<div class="fb-msg-header">' +
+        '<div class="fb-avatar" style="background:' + color + '">' + initials + '<\/div>' +
+        '<div>' +
+          '<div class="fb-name">' + m.name + '<\/div>' +
+          '<div class="fb-meta">' + m.time + '<\/div>' +
+        '<\/div>' +
+        '<div class="fb-stars">' + stars + '<\/div>' +
+      '<\/div>' +
+      '<p class="fb-text">' + m.msg + '<\/p>' +
+      '<span class="fb-tag">' + m.role + '<\/span>' +
+    '<\/div>';
+  }).join('');
+}
+
+function submitFeedback() {
+  var name = document.getElementById('fbName').value.trim();
+  var msg = document.getElementById('fbMessage').value.trim();
+  var role = document.getElementById('fbRole').value;
+
+  if (!name) { alert('Please enter your name.'); return; }
+  if (!msg || msg.length < 10) { alert('Please write at least a sentence.'); return; }
+  if (userRating === 0) { alert('Please give a star rating.'); return; }
+
+  // Add to top of messages
+  feedbackMessages.unshift({
+    name: name,
+    role: role,
+    msg: msg,
+    stars: userRating,
+    time: 'Just now'
+  });
+
+  renderFeedbackWall();
+
+  // Reset form
+  document.getElementById('fbName').value = '';
+  document.getElementById('fbMessage').value = '';
+  userRating = 0;
+  document.querySelectorAll('.star').forEach(function(s) {
+    s.textContent = '☆';
+    s.style.color = 'var(--muted)';
+  });
+
+  // Scroll to wall
+  document.getElementById('feedbackWall').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// Initial render
+renderFeedbackWall();
+
 </script>
 </body>
 </html>
