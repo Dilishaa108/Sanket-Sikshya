@@ -283,8 +283,33 @@ footer{background:#050A10;color:var(--text);padding:40px 6vw 24px;border-top:1px
   <div id="tab-alphabet" style="display:none;">
     <div class="alpha-section">
       <h2 class="section-title">Full Braille <span>Alphabet A–Z</span></h2>
-      <p style="font-size:14px;color:var(--muted-l);margin-bottom:28px;line-height:1.6;">Click any letter to explore its pattern in the interactive cell above. Each Braille cell has 6 possible dot positions arranged in 2 columns of 3 rows.</p>
+      <p style="font-size:14px;color:var(--muted-l);margin-bottom:28px;line-height:1.6;">Click any letter card to explore its Braille pattern in detail below.</p>
       <div class="bl-grid" id="blGrid"></div>
+    </div>
+
+    <!-- LETTER DETAIL PANEL with Next/Prev -->
+    <div id="blDetail" style="background:var(--bg2);border:1px solid #3B82F630;border-radius:20px;padding:32px;margin-top:32px;display:none;">
+      <div style="display:grid;grid-template-columns:auto 1fr;gap:32px;align-items:start;">
+        <!-- Big Braille Cell -->
+        <div style="text-align:center;">
+          <div id="blDetailCell" style="display:inline-grid;grid-template-columns:1fr 1fr;gap:14px;padding:24px;background:var(--bg3);border-radius:16px;border:1px solid #1E3A5F;margin-bottom:16px;"></div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:700;color:var(--white);line-height:1;" id="blDetailLetter">A</div>
+          <div style="font-family:'Noto Sans Devanagari',sans-serif;font-size:18px;color:var(--gold);margin-top:4px;" id="blDetailNep">अ</div>
+        </div>
+        <!-- Info -->
+        <div>
+          <div style="font-size:11px;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px;">Dot Pattern</div>
+          <div style="font-size:16px;color:var(--blue-ll);font-weight:600;margin-bottom:16px;" id="blDetailDots">Dots 1</div>
+          <div style="font-size:14px;color:var(--muted-l);line-height:1.8;margin-bottom:24px;" id="blDetailHint">Raise dot 1 (top-left). This is the simplest Braille cell — one raised dot in the top-left position.</div>
+          <!-- Prev / Next buttons -->
+          <div style="display:flex;gap:12px;flex-wrap:wrap;">
+            <button id="blPrevBtn" onclick="blNavigate(-1)" style="display:flex;align-items:center;gap:8px;background:transparent;border:1.5px solid #1E3A5F;border-radius:10px;padding:11px 22px;font-size:14px;font-weight:600;color:var(--muted-l);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;" onmouseover="this.style.borderColor='var(--blue-l)';this.style.color='var(--white)'" onmouseout="this.style.borderColor='#1E3A5F';this.style.color='var(--muted-l)'">← Previous</button>
+            <button id="blNextBtn" onclick="blNavigate(1)" style="display:flex;align-items:center;gap:8px;background:var(--blue);border:none;border-radius:10px;padding:11px 22px;font-size:14px;font-weight:600;color:#fff;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;" onmouseover="this.style.background='var(--blue-d)'" onmouseout="this.style.background='var(--blue)'">Next →</button>
+            <button onclick="switchTab('learn',document.querySelectorAll('.tab-btn')[0]);setTimeout(()=>{var l=document.getElementById('letterInput');l.value=blCurrentIdx>=0?brailleData[blCurrentIdx].l:'A';l.dispatchEvent(new Event('input'));},100);" style="background:transparent;border:1.5px solid #F0B42940;border-radius:10px;padding:11px 22px;font-size:14px;font-weight:600;color:var(--gold);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='#F0B42940'">⠿ Practice Dots</button>
+          </div>
+          <div style="margin-top:16px;font-size:12px;color:var(--muted);">Letter <span id="blDetailNum">1</span> of 26</div>
+        </div>
+      </div>
     </div>
     <div style="background:var(--bg2);border:1px solid #1E3A5F;border-radius:16px;padding:28px;margin-top:32px;">
       <h3 style="font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--white);margin-bottom:16px;">How to Read Braille Dots</h3>
@@ -553,7 +578,72 @@ function resetDots() {
   detectLetterFromDots();
 }
 
-// ── ALPHABET GRID ──
+// ── ALPHABET GRID with detail panel and Next/Prev ──
+let blCurrentIdx = -1;
+
+function blShowDetail(idx) {
+  blCurrentIdx = idx;
+  const d = brailleData[idx];
+  // Highlight active card
+  document.querySelectorAll('.bl-card').forEach((c,i) => c.classList.toggle('active', i===idx));
+  // Scroll detail into view
+  const panel = document.getElementById('blDetail');
+  panel.style.display = 'block';
+  // Build big dot cell
+  const cell = document.getElementById('blDetailCell');
+  // Column-first: positions 0,3 / 1,4 / 2,5 -> row order: (0,3),(1,4),(2,5)
+  const order = [0,3,1,4,2,5];
+  cell.innerHTML = order.map(pos => {
+    const on = d.p[pos] === 1;
+    const num = [1,4,2,5,3,6][order.indexOf(pos)];
+    return `<div style="width:28px;height:28px;border-radius:50%;background:${on?'var(--blue)':'#0A1628'};border:2px solid ${on?'var(--blue-l)':'#1E3A5F'};box-shadow:${on?'0 0 12px #3B82F680':'none'};display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:${on?'#fff':'var(--muted)'};transition:all 0.3s;">${num}</div>`;
+  }).join('');
+  document.getElementById('blDetailLetter').textContent = d.l;
+  document.getElementById('blDetailNep').textContent = d.n;
+  document.getElementById('blDetailDots').textContent = d.dots;
+  document.getElementById('blDetailNum').textContent = idx + 1;
+  // Hint text
+  const hints = {
+    A:'Raise dot 1 (top-left). One raised dot — the simplest Braille cell.',
+    B:'Raise dots 1 and 2 (left column, top two). Two raised dots in the left column.',
+    C:'Raise dots 1 and 4 (top row, both columns). Top row fully raised.',
+    D:'Raise dots 1, 4, and 5 (top row + middle-right). Three dots in an L shape.',
+    E:'Raise dots 1 and 5 (top-left and middle-right). A diagonal pair.',
+    F:'Raise dots 1, 2, and 4 (left column top two + top-right). Compact cluster.',
+    G:'Raise dots 1, 2, 4, and 5 (all four top dots). Full square pattern.',
+    H:'Raise dots 1, 2, and 5 (left column top two + middle-right).',
+    I:'Raise dots 2 and 4 (middle-left and top-right). Cross pattern.',
+    J:'Raise dots 2, 4, and 5 (middle-left and full right top pair).',
+    K:'Raise dots 1 and 3 (left column top and bottom). Left column ends.',
+    L:'Raise dots 1, 2, and 3 (full left column). All three left dots raised.',
+    M:'Raise dots 1, 3, and 4 (left column ends + top-right).',
+    N:'Raise dots 1, 3, 4, and 5. Left column ends plus top-right pair.',
+    O:'Raise dots 1, 3, and 5 (left column ends + middle-right).',
+    P:'Raise dots 1, 2, 3, and 4. Full left column plus top-right.',
+    Q:'Raise dots 1, 2, 3, 4, and 5. Five of six dots — only bottom-right empty.',
+    R:'Raise dots 1, 2, 3, and 5. Full left column plus middle-right.',
+    S:'Raise dots 2, 3, and 4 (middle-left, bottom-left, top-right).',
+    T:'Raise dots 2, 3, 4, and 5 (middle-left, bottom-left, plus right top pair).',
+    U:'Raise dots 1 and 6 (top-left and bottom-right). Diagonal corners.',
+    V:'Raise dots 1, 2, and 6. Left column top pair plus bottom-right.',
+    W:'Raise dots 2, 4, 5, and 6. Middle-left plus full right column.',
+    X:'Raise dots 1, 3, and 6. Left column ends plus bottom-right.',
+    Y:'Raise dots 1, 3, 4, 5, and 6. Five dots — only top-right missing.',
+    Z:'Raise dots 1, 3, 4, and 6. Left column ends plus right column ends.',
+  };
+  document.getElementById('blDetailHint').textContent = hints[d.l] || d.dots;
+  // Update prev/next button states
+  document.getElementById('blPrevBtn').style.opacity = idx === 0 ? '0.4' : '1';
+  document.getElementById('blNextBtn').style.opacity = idx === brailleData.length-1 ? '0.4' : '1';
+  // Smooth scroll to panel
+  setTimeout(() => panel.scrollIntoView({behavior:'smooth', block:'nearest'}), 50);
+}
+
+function blNavigate(dir) {
+  const next = blCurrentIdx + dir;
+  if (next >= 0 && next < brailleData.length) blShowDetail(next);
+}
+
 const blGrid=document.getElementById('blGrid');
 brailleData.forEach((d,i)=>{
   const card=document.createElement('div');
@@ -564,14 +654,7 @@ brailleData.forEach((d,i)=>{
     <span class="bl-nep">${d.n}<\/span>
     <span class="bl-dots-label">${d.dots}<\/span>
   `;
-  card.addEventListener('click',()=>{
-    document.querySelectorAll('.bl-card').forEach(c=>c.classList.remove('active'));
-    card.classList.add('active');
-    updateBigCell(d.p,d.l,d.n,d.dots);
-    // Switch to learn tab to show the big cell
-    switchTab('learn',document.querySelectorAll('.tab-btn')[0]);
-    document.getElementById('letterInput').value=d.l;
-  });
+  card.addEventListener('click',()=>{ blShowDetail(i); });
   blGrid.appendChild(card);
 });
 

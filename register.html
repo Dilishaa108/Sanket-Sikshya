@@ -6,242 +6,211 @@
 <title>Register Free — SanketSiksha | संकेत शिक्षा</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700&family=DM+Sans:wght@300;400;500&family=Noto+Sans+Devanagari:wght@400;600&display=swap" rel="stylesheet"/>
 <style>
-:root{
-  --bg:#080E17;--bg2:#0D1520;--bg3:#111D2E;
-  --blue:#3B82F6;--blue-d:#2563EB;--blue-l:#60A5FA;--blue-ll:#93C5FD;
-  --gold:#F0B429;--text:#E2E8F0;--muted:#64748B;--muted-l:#94A3B8;--white:#F8FAFC;
-  --green:#10B981;--red:#EF4444;
-}
+:root{--bg:#080E17;--bg2:#0D1520;--bg3:#111D2E;--blue:#3B82F6;--blue-d:#2563EB;--blue-l:#60A5FA;--blue-ll:#93C5FD;--gold:#F0B429;--text:#E2E8F0;--muted:#64748B;--muted-l:#94A3B8;--white:#F8FAFC;--green:#10B981;--red:#EF4444;}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column;}
-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:16px 6vw;background:rgba(8,14,23,0.92);backdrop-filter:blur(20px);border-bottom:1px solid #3B82F618;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:16px 6vw;background:rgba(8,14,23,0.95);backdrop-filter:blur(20px);border-bottom:1px solid #3B82F618;}
 .nav-logo{display:flex;flex-direction:column;line-height:1.1;text-decoration:none;}
 .nav-logo .dev{font-family:'Noto Sans Devanagari',sans-serif;font-size:10px;font-weight:600;color:var(--blue-l);}
 .nav-logo .eng{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:var(--white);}
 main{flex:1;display:flex;align-items:center;justify-content:center;padding:100px 20px 60px;}
-.card{background:var(--bg2);border:1px solid #1E3A5F;border-radius:24px;padding:48px 44px;width:100%;max-width:480px;position:relative;overflow:hidden;}
-.card::before{content:'';position:absolute;top:-80px;right:-80px;width:240px;height:240px;background:radial-gradient(circle,#F0B42908,transparent 70%);pointer-events:none;}
-
-/* PROGRESS STEPS */
-.progress{display:flex;align-items:center;justify-content:center;gap:0;margin-bottom:36px;}
-.ps{display:flex;flex-direction:column;align-items:center;gap:6px;position:relative;z-index:1;}
-.ps-circle{width:32px;height:32px;border-radius:50%;border:2px solid #1E3A5F;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:var(--muted);transition:all 0.3s;background:var(--bg2);}
-.ps-circle.active{border-color:var(--blue);background:var(--blue);color:#fff;box-shadow:0 0 16px #3B82F640;}
-.ps-circle.done{border-color:var(--green);background:var(--green);color:#fff;}
-.ps-label{font-size:10px;color:var(--muted);letter-spacing:0.06em;white-space:nowrap;}
-.ps-label.active{color:var(--blue-ll);}
-.ps-line{flex:1;height:2px;background:#1E3A5F;transition:background 0.3s;min-width:32px;max-width:60px;margin-top:-18px;}
+.card{background:var(--bg2);border:1px solid #1E3A5F;border-radius:24px;padding:44px 40px;width:100%;max-width:500px;}
+.progress{display:flex;align-items:center;justify-content:center;margin-bottom:32px;}
+.ps{display:flex;flex-direction:column;align-items:center;gap:5px;}
+.ps-c{width:30px;height:30px;border-radius:50%;border:2px solid #1E3A5F;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--muted);transition:all 0.3s;background:var(--bg2);}
+.ps-c.active{border-color:var(--blue);background:var(--blue);color:#fff;box-shadow:0 0 14px #3B82F640;}
+.ps-c.done{border-color:var(--green);background:var(--green);color:#fff;}
+.ps-l{font-size:9px;color:var(--muted);letter-spacing:0.05em;text-align:center;}
+.ps-l.active{color:var(--blue-ll);}
+.ps-line{flex:1;height:2px;background:#1E3A5F;min-width:28px;max-width:56px;margin-bottom:20px;transition:background 0.3s;}
 .ps-line.done{background:var(--green);}
-
-/* BRAND */
-.brand{text-align:center;margin-bottom:28px;}
-.brand .tag{display:inline-block;background:#1E3A5F40;border:1px solid #3B82F630;border-radius:20px;padding:4px 14px;font-size:10px;color:var(--blue-ll);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:12px;}
-.brand h1{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;color:var(--white);}
-.brand p{font-size:13px;color:var(--muted-l);margin-top:6px;}
-
-/* STEPS */
 .step{display:none;} .step.active{display:block;}
-
-/* FIELDS */
-.field{margin-bottom:18px;}
-.field label{display:block;font-size:11px;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:7px;}
-.field input,.field select,.field textarea{width:100%;background:var(--bg3);border:1.5px solid #1E3A5F;border-radius:10px;padding:13px 16px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--white);outline:none;transition:border-color 0.2s;}
+.brand{text-align:center;margin-bottom:24px;}
+.brand h1{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700;color:var(--white);}
+.brand p{font-size:13px;color:var(--muted-l);margin-top:6px;}
+.brand .tag{display:inline-block;background:#1E3A5F40;border:1px solid #3B82F630;border-radius:20px;padding:3px 12px;font-size:10px;color:var(--blue-ll);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px;}
+.field{margin-bottom:16px;}
+.field label{display:block;font-size:10px;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:6px;}
+.field input,.field select{width:100%;background:var(--bg3);border:1.5px solid #1E3A5F;border-radius:10px;padding:12px 15px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--white);outline:none;transition:border-color 0.2s;}
 .field input:focus,.field select:focus{border-color:var(--blue);}
 .field input.err{border-color:var(--red);}
 .field input.ok{border-color:var(--green);}
 .field-err{font-size:11px;color:var(--red);margin-top:4px;display:none;}
 .field-err.show{display:block;}
-.field-ok{font-size:11px;color:var(--green);margin-top:4px;display:none;}
-.field-ok.show{display:block;}
 .pw-wrap{position:relative;}
-.pw-wrap input{padding-right:46px;}
-.pw-eye{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--muted);cursor:pointer;font-size:15px;padding:4px;}
+.pw-wrap input{padding-right:44px;}
+.pw-eye{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--muted);cursor:pointer;font-size:14px;padding:3px;}
 .pw-eye:hover{color:var(--blue-ll);}
-
-/* PASSWORD STRENGTH */
+/* Password strength */
 .pw-strength{margin-top:8px;}
-.pw-bars{display:flex;gap:4px;margin-bottom:4px;}
-.pw-bar{flex:1;height:3px;border-radius:2px;background:#1E3A5F;transition:background 0.3s;}
+.pw-bars{display:flex;gap:4px;margin-bottom:5px;}
+.pw-bar{flex:1;height:4px;border-radius:2px;background:#1E3A5F;transition:background 0.3s;}
 .pw-bar.weak{background:var(--red);}
-.pw-bar.medium{background:var(--gold);}
+.pw-bar.fair{background:#F59E0B;}
+.pw-bar.good{background:var(--gold);}
 .pw-bar.strong{background:var(--green);}
-.pw-text{font-size:11px;color:var(--muted);}
-
+.pw-label{font-size:11px;}
+.pw-reqs{margin-top:8px;display:flex;flex-direction:column;gap:3px;}
+.pw-req{font-size:11px;color:var(--muted);display:flex;align-items:center;gap:6px;transition:color 0.2s;}
+.pw-req.met{color:var(--green);}
+.pw-req::before{content:'○';font-size:9px;}
+.pw-req.met::before{content:'●';color:var(--green);}
 /* OTP */
-.otp-wrap{text-align:center;margin-bottom:8px;}
-.otp-icon{font-size:48px;margin-bottom:12px;}
+.otp-wrap{text-align:center;margin-bottom:16px;}
+.otp-icon{font-size:44px;margin-bottom:10px;}
 .otp-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:var(--white);margin-bottom:6px;}
-.otp-desc{font-size:13px;color:var(--muted-l);line-height:1.6;margin-bottom:20px;}
-.otp-email{color:var(--white);font-weight:500;}
-.otp-boxes{display:flex;gap:10px;justify-content:center;margin-bottom:12px;}
+.otp-desc{font-size:13px;color:var(--muted-l);line-height:1.6;margin-bottom:18px;}
+.otp-email-show{color:var(--white);font-weight:600;}
+.ob-row{display:flex;gap:10px;justify-content:center;margin-bottom:10px;}
 .ob{width:50px;height:58px;background:var(--bg3);border:1.5px solid #1E3A5F;border-radius:12px;font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700;color:var(--white);text-align:center;outline:none;transition:all 0.2s;}
 .ob:focus{border-color:var(--blue);box-shadow:0 0 12px #3B82F625;}
-.ob.filled{border-color:var(--blue);}
-.ob.ok{border-color:var(--green);background:#10B98115;animation:popDot 0.3s ease;}
-.ob.bad{border-color:var(--red);background:#EF444415;animation:shakeDot 0.3s ease;}
-@keyframes popDot{0%{transform:scale(0.9)}60%{transform:scale(1.1)}100%{transform:scale(1)}}
-@keyframes shakeDot{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
-.otp-timer{font-size:12px;color:var(--muted);}
+.ob.filled{border-color:var(--blue-l);}
+.ob.ok{border-color:var(--green);background:#10B98112;animation:popdot 0.3s ease;}
+.ob.bad{border-color:var(--red);background:#EF444412;animation:shakedot 0.3s ease;}
+@keyframes popdot{0%{transform:scale(0.85)}60%{transform:scale(1.1)}100%{transform:scale(1)}}
+@keyframes shakedot{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.otp-timer{font-size:12px;color:var(--muted);text-align:center;}
 .otp-timer b{color:var(--blue-l);}
-.resend-btn{background:none;border:none;color:var(--blue-ll);font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;display:none;margin-top:4px;}
-.resend-btn.show{display:inline;}
-
-/* GOAL CHIPS */
+.resend{background:none;border:none;color:var(--blue-ll);font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;display:none;margin-top:6px;}
+.resend.show{display:inline-block;}
+.demo-note{font-size:11px;color:var(--muted);text-align:center;margin-top:6px;background:#1E3A5F30;border-radius:6px;padding:6px 10px;}
+/* Chips */
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px;}
-.chip{padding:8px 14px;background:var(--bg3);border:1px solid #1E3A5F;border-radius:20px;font-size:12px;color:var(--muted-l);cursor:pointer;transition:all 0.2s;user-select:none;}
+.chip{padding:7px 14px;background:var(--bg3);border:1px solid #1E3A5F;border-radius:20px;font-size:12px;color:var(--muted-l);cursor:pointer;transition:all 0.2s;user-select:none;}
 .chip:hover{border-color:var(--blue);color:var(--white);}
-.chip.selected{background:#1E3A5F50;border-color:var(--blue);color:var(--blue-ll);}
-
-/* ALERT */
-.alert{border-radius:10px;padding:11px 14px;font-size:13px;margin-bottom:14px;display:none;align-items:center;gap:8px;}
+.chip.sel{background:#1E3A5F50;border-color:var(--blue);color:var(--blue-ll);}
+/* Alert */
+.alert{border-radius:10px;padding:10px 14px;font-size:13px;margin-bottom:14px;display:none;align-items:center;gap:8px;line-height:1.5;}
 .alert.show{display:flex;}
 .alert.info{background:#1E3A5F40;border:1px solid #3B82F640;color:var(--blue-ll);}
 .alert.success{background:#10B98118;border:1px solid #10B98140;color:#6EE7B7;}
 .alert.error{background:#EF444418;border:1px solid #EF444440;color:#FCA5A5;}
-
-/* SUBMIT BTN */
+/* Buttons */
 .btn{width:100%;padding:14px;background:var(--blue);color:#fff;border:none;border-radius:12px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:10px;margin-top:6px;}
-.btn:hover{background:var(--blue-d);transform:translateY(-1px);box-shadow:0 4px 20px #3B82F640;}
+.btn:hover:not(:disabled){background:var(--blue-d);transform:translateY(-1px);box-shadow:0 4px 20px #3B82F640;}
 .btn:disabled{opacity:0.6;cursor:not-allowed;transform:none;}
 .btn.gold{background:linear-gradient(135deg,#F0B429,#D97706);}
-.btn.gold:hover{background:linear-gradient(135deg,#D97706,#B45309);}
+.btn.gold:hover:not(:disabled){background:linear-gradient(135deg,#D97706,#B45309);}
 .spin{width:17px;height:17px;border:2px solid #fff4;border-top-color:#fff;border-radius:50%;animation:sp 0.6s linear infinite;display:none;}
 @keyframes sp{to{transform:rotate(360deg)}}
-.btn.loading .spin{display:block;}
-.btn.loading .bl{display:none;}
-
-/* DIVIDER */
-.divider{display:flex;align-items:center;gap:12px;margin:20px 0;}
+.btn.loading .spin{display:block;} .btn.loading .bl{display:none;}
+.divider{display:flex;align-items:center;gap:12px;margin:18px 0;}
 .divider::before,.divider::after{content:'';flex:1;height:1px;background:#1E3A5F;}
 .divider span{font-size:10px;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;}
-
-/* SUCCESS */
-.success{text-align:center;padding:16px 0;}
-.success .icon{font-size:72px;animation:pop 0.6s cubic-bezier(0.175,0.885,0.32,1.275);}
-@keyframes pop{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
-.success h2{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:700;color:var(--white);margin:12px 0 6px;}
-.success .nep{font-family:'Noto Sans Devanagari',sans-serif;font-size:16px;color:var(--gold);margin-bottom:12px;}
-.success p{font-size:14px;color:var(--muted-l);line-height:1.7;margin-bottom:24px;}
-
-/* LINKS */
-.auth-link{text-align:center;margin-top:20px;font-size:13px;color:var(--muted-l);}
-.auth-link a{color:var(--blue-ll);text-decoration:none;font-weight:500;}
-.auth-link a:hover{color:var(--blue);}
-footer.af{padding:16px 6vw;text-align:center;border-top:1px solid #1E3A5F10;margin-top:auto;}
-footer.af p{font-size:11px;color:var(--muted);}
-footer.af a{color:var(--blue-ll);text-decoration:none;}
-
-/* CHECKBOX */
-.check-wrap{display:flex;gap:10px;align-items:flex-start;margin-bottom:18px;}
-.check-wrap input[type=checkbox]{width:18px;height:18px;accent-color:var(--blue);flex-shrink:0;margin-top:2px;cursor:pointer;}
+.check-wrap{display:flex;gap:10px;align-items:flex-start;margin-bottom:16px;}
+.check-wrap input[type=checkbox]{width:17px;height:17px;accent-color:var(--blue);flex-shrink:0;margin-top:2px;cursor:pointer;}
 .check-wrap label{font-size:13px;color:var(--muted-l);line-height:1.6;cursor:pointer;}
 .check-wrap a{color:var(--blue-ll);text-decoration:none;}
+.auth-link{text-align:center;margin-top:18px;font-size:13px;color:var(--muted-l);}
+.auth-link a{color:var(--blue-ll);text-decoration:none;font-weight:500;}
+/* Success */
+.success{text-align:center;padding:16px 0;}
+.success .sicon{font-size:64px;animation:pop 0.6s cubic-bezier(0.175,0.885,0.32,1.275);}
+@keyframes pop{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
+.success h2{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;color:var(--white);margin:12px 0 4px;}
+.success .nep{font-family:'Noto Sans Devanagari',sans-serif;font-size:15px;color:var(--gold);margin-bottom:12px;}
+.success p{font-size:14px;color:var(--muted-l);line-height:1.7;margin-bottom:22px;}
+footer.af{padding:16px 6vw;text-align:center;border-top:1px solid #1E3A5F10;}
+footer.af p{font-size:11px;color:var(--muted);}
+footer.af a{color:var(--blue-ll);text-decoration:none;}
 </style>
 </head>
 <body>
 <nav>
-  <a href="index.html" class="nav-logo">
-    <span class="dev">संकेत शिक्षा</span>
-    <span class="eng">SanketSiksha</span>
-  </a>
+  <a href="index.html" class="nav-logo"><span class="dev">संकेत शिक्षा</span><span class="eng">SanketSiksha</span></a>
   <div style="display:flex;gap:10px;align-items:center;">
-    <span style="font-size:13px;color:var(--muted-l);">Already have an account?</span>
-    <a href="login.html" style="font-size:12px;color:var(--white);text-decoration:none;padding:9px 18px;border:1px solid #1E3A5F;border-radius:6px;transition:all 0.2s;" onmouseover="this.style.borderColor='var(--blue-l)'" onmouseout="this.style.borderColor='#1E3A5F'">Log In</a>
+    <span style="font-size:13px;color:var(--muted-l);">Already registered?</span>
+    <a href="login.html" style="font-size:12px;color:var(--white);text-decoration:none;padding:8px 18px;border:1px solid #1E3A5F;border-radius:6px;transition:border-color 0.2s;" onmouseover="this.style.borderColor='var(--blue-l)'" onmouseout="this.style.borderColor='#1E3A5F'">Log In</a>
   </div>
 </nav>
-
 <main>
 <div class="card">
-
   <!-- PROGRESS -->
-  <div class="progress" id="regProgress">
-    <div class="ps"><div class="ps-circle active" id="rc1">1</div><div class="ps-label active" id="rl1">Account</div></div>
-    <div class="ps-line" id="rl12"></div>
-    <div class="ps"><div class="ps-circle" id="rc2">2</div><div class="ps-label" id="rl2">Verify</div></div>
-    <div class="ps-line" id="rl23"></div>
-    <div class="ps"><div class="ps-circle" id="rc3">3</div><div class="ps-label" id="rl3">Goals</div></div>
-    <div class="ps-line" id="rl34"></div>
-    <div class="ps"><div class="ps-circle" id="rc4">✓</div><div class="ps-label" id="rl4">Done!</div></div>
+  <div class="progress" id="prog">
+    <div class="ps"><div class="ps-c active" id="pc1">1</div><div class="ps-l active" id="pl1">Account</div></div>
+    <div class="ps-line" id="pl12"></div>
+    <div class="ps"><div class="ps-c" id="pc2">2</div><div class="ps-l" id="pl2">Verify</div></div>
+    <div class="ps-line" id="pl23"></div>
+    <div class="ps"><div class="ps-c" id="pc3">3</div><div class="ps-l" id="pl3">Goals</div></div>
+    <div class="ps-line" id="pl34"></div>
+    <div class="ps"><div class="ps-c" id="pc4">✓</div><div class="ps-l" id="pl4">Done!</div></div>
   </div>
 
-  <div class="alert" id="regAlert"></div>
+  <div class="alert" id="alertBox"></div>
 
-  <!-- STEP 1: CREATE ACCOUNT -->
-  <div class="step active" id="step1">
+  <!-- STEP 1: ACCOUNT DETAILS -->
+  <div class="step active" id="s1">
     <div class="brand">
       <span class="tag">Free Forever · निःशुल्क</span>
       <h1>Create Your Account</h1>
-      <p>Join thousands learning Braille &amp; Sign Language across Nepal</p>
+      <p>Join Nepal's first free Braille &amp; Sign Language platform</p>
     </div>
-
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
       <div class="field">
-        <label>First Name</label>
-        <input type="text" id="regFirst" placeholder="Aarav" autocomplete="given-name"/>
-        <p class="field-err" id="firstErr">Required</p>
+        <label>First Name *</label>
+        <input type="text" id="rFirst" placeholder="Aarav" autocomplete="given-name"/>
+        <p class="field-err" id="eFirst">First name is required.</p>
       </div>
       <div class="field">
         <label>Last Name</label>
-        <input type="text" id="regLast" placeholder="Shrestha" autocomplete="family-name"/>
+        <input type="text" id="rLast" placeholder="Shrestha" autocomplete="family-name"/>
       </div>
     </div>
     <div class="field">
-      <label>Email Address</label>
-      <input type="email" id="regEmail" placeholder="you@example.com" autocomplete="email"/>
-      <p class="field-err" id="emailErr">Enter a valid email address.</p>
+      <label>Email Address *</label>
+      <input type="email" id="rEmail" placeholder="yourname@gmail.com" autocomplete="email" oninput="validateEmailLive(this)"/>
+      <p class="field-err" id="eEmail">Please enter a real email address.</p>
     </div>
     <div class="field">
-      <label>Password</label>
+      <label>Password *</label>
       <div class="pw-wrap">
-        <input type="password" id="regPass" placeholder="Minimum 8 characters" oninput="checkPwStrength(this.value)"/>
-        <button class="pw-eye" type="button" onclick="togglePw('regPass',this)">👁</button>
+        <input type="password" id="rPass" placeholder="Min 8 chars with A, a, 1, @" oninput="checkStrength(this.value)"/>
+        <button class="pw-eye" type="button" onclick="togglePw('rPass',this)">👁</button>
       </div>
       <div class="pw-strength">
-        <div class="pw-bars"><div class="pw-bar" id="pb1"></div><div class="pw-bar" id="pb2"></div><div class="pw-bar" id="pb3"></div><div class="pw-bar" id="pb4"></div></div>
-        <p class="pw-text" id="pwText">Enter a password</p>
+        <div class="pw-bars">
+          <div class="pw-bar" id="bar1"></div><div class="pw-bar" id="bar2"></div>
+          <div class="pw-bar" id="bar3"></div><div class="pw-bar" id="bar4"></div>
+        </div>
+        <p class="pw-label" id="pwLabel" style="color:var(--muted);font-size:11px;">Enter a password</p>
+        <div class="pw-reqs" id="pwReqs">
+          <span class="pw-req" id="req-len">At least 8 characters</span>
+          <span class="pw-req" id="req-up">One uppercase letter (A–Z)</span>
+          <span class="pw-req" id="req-low">One lowercase letter (a–z)</span>
+          <span class="pw-req" id="req-num">One number (0–9)</span>
+          <span class="pw-req" id="req-sym">One special character (!@#$% etc.)</span>
+        </div>
       </div>
-      <p class="field-err" id="passErr">Password must be at least 8 characters.</p>
+      <p class="field-err" id="ePass">Password must be Strong to continue.</p>
     </div>
     <div class="field">
-      <label>Confirm Password</label>
+      <label>Confirm Password *</label>
       <div class="pw-wrap">
-        <input type="password" id="regPass2" placeholder="Repeat password"/>
-        <button class="pw-eye" type="button" onclick="togglePw('regPass2',this)">👁</button>
+        <input type="password" id="rPass2" placeholder="Repeat your password"/>
+        <button class="pw-eye" type="button" onclick="togglePw('rPass2',this)">👁</button>
       </div>
-      <p class="field-err" id="pass2Err">Passwords do not match.</p>
+      <p class="field-err" id="ePass2">Passwords do not match.</p>
     </div>
     <div class="field">
       <label>I am a</label>
-      <select id="regRole">
-        <option value="Student">Student — विद्यार्थी</option>
-        <option value="Teacher">Teacher — शिक्षक</option>
-        <option value="Parent">Parent — अभिभावक</option>
-        <option value="Family Member">Family Member</option>
-        <option value="NGO Worker">NGO / Community Worker</option>
-      </select>
+      <select id="rRole"><option>Student — विद्यार्थी</option><option>Teacher — शिक्षक</option><option>Parent — अभिभावक</option><option>Family Member</option><option>NGO / Community Worker</option></select>
     </div>
     <div class="check-wrap">
-      <input type="checkbox" id="regTerms"/>
-      <label for="regTerms">I agree to the <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>. SanketSiksha is free forever — no hidden charges.</label>
+      <input type="checkbox" id="rTerms"/>
+      <label for="rTerms">I agree to the <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>. SanketSiksha is free forever — no hidden charges.</label>
     </div>
-    <button class="btn" id="btn1" onclick="step1Next()"><span class="bl">Continue →</span><div class="spin"></div></button>
-
-    <div class="divider"><span>or sign up with</span></div>
-    <button onclick="socialReg('Google')" style="width:100%;padding:13px;background:var(--bg3);border:1px solid #1E3A5F;border-radius:10px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:10px;" onmouseover="this.style.borderColor='var(--blue)'" onmouseout="this.style.borderColor='#1E3A5F'">
-      <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 6.29C4.672 4.163 6.656 3.58 9 3.58z"/></svg>
-      Sign up with Google
-    </button>
+    <button class="btn" id="btn1" onclick="doStep1()"><span class="bl">Continue →</span><div class="spin"></div></button>
     <div class="auth-link">Already have an account? <a href="login.html">Log In</a></div>
   </div>
 
-  <!-- STEP 2: OTP VERIFY -->
-  <div class="step" id="step2">
+  <!-- STEP 2: EMAIL OTP -->
+  <div class="step" id="s2">
     <div class="otp-wrap">
       <div class="otp-icon">📩</div>
       <h3 class="otp-title">Verify Your Email</h3>
-      <p class="otp-desc">We sent a 6-digit code to<br/><span class="otp-email" id="otpEmailShow">your@email.com</span><br/>Check your inbox (and spam folder).</p>
+      <p class="otp-desc">We sent a 6-digit code to<br/><span class="otp-email-show" id="otpEmail">—</span><br/>Enter it below. Check spam if you don't see it.</p>
     </div>
-    <div class="otp-boxes" id="otpBoxes">
+    <div class="ob-row">
       <input class="ob" maxlength="1" type="text" inputmode="numeric"/>
       <input class="ob" maxlength="1" type="text" inputmode="numeric"/>
       <input class="ob" maxlength="1" type="text" inputmode="numeric"/>
@@ -249,251 +218,321 @@ footer.af a{color:var(--blue-ll);text-decoration:none;}
       <input class="ob" maxlength="1" type="text" inputmode="numeric"/>
       <input class="ob" maxlength="1" type="text" inputmode="numeric"/>
     </div>
-    <div style="text-align:center;margin-bottom:20px;">
-      <p class="otp-timer">Code expires in <b id="otpTime">05:00</b></p>
-      <button class="resend-btn" id="resendBtn" onclick="resendCode()">↺ Resend Code</button>
-      <p style="font-size:11px;color:var(--muted);margin-top:6px;">Demo: use code <b style="color:var(--blue-ll);" id="demoCode">123456</b></p>
-    </div>
-    <button class="btn" id="btn2" onclick="step2Verify()"><span class="bl">Verify Email →</span><div class="spin"></div></button>
-    <div style="text-align:center;margin-top:14px;">
-      <button onclick="goStep(1)" style="background:none;border:none;color:var(--muted-l);font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;">← Back</button>
-    </div>
+    <div class="otp-timer">Code expires in <b id="otpClock">05:00</b></div>
+    <div style="text-align:center;"><button class="resend" id="resendBtn" onclick="resendOTP()">↺ Resend Code</button></div>
+    <div class="demo-note" id="demoNote">🔧 Demo mode — use code: <b id="demoCode" style="color:var(--blue-ll);">123456</b></div>
+    <button class="btn" id="btn2" onclick="doStep2()" style="margin-top:14px;"><span class="bl">Verify &amp; Continue →</span><div class="spin"></div></button>
+    <div style="text-align:center;margin-top:12px;"><button onclick="goTo(1)" style="background:none;border:none;color:var(--muted-l);font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;">← Back</button></div>
   </div>
 
-  <!-- STEP 3: LEARNING GOALS -->
-  <div class="step" id="step3">
-    <div class="brand">
-      <span class="tag">Almost done!</span>
-      <h1>Your Learning Goals</h1>
-      <p>Tell us why you're here — we'll personalise your experience</p>
-    </div>
+  <!-- STEP 3: GOALS -->
+  <div class="step" id="s3">
+    <div class="brand"><span class="tag">Almost done!</span><h1>Your Learning Goals</h1><p>Help us personalise your experience</p></div>
     <div class="field">
-      <label>What brings you to SanketSiksha?</label>
-      <div class="chips" id="goalChips">
-        <span class="chip" onclick="toggleChip(this)">Learn Braille</span>
-        <span class="chip" onclick="toggleChip(this)">Learn Sign Language</span>
-        <span class="chip" onclick="toggleChip(this)">I'm a teacher</span>
-        <span class="chip" onclick="toggleChip(this)">Family member is deaf</span>
-        <span class="chip" onclick="toggleChip(this)">Family member is blind</span>
-        <span class="chip" onclick="toggleChip(this)">Community work</span>
-        <span class="chip" onclick="toggleChip(this)">Curiosity / General interest</span>
-        <span class="chip" onclick="toggleChip(this)">NGO / Research</span>
+      <label>What brings you here? (pick all that apply)</label>
+      <div class="chips">
+        <span class="chip" onclick="this.classList.toggle('sel')">Learn Braille</span>
+        <span class="chip" onclick="this.classList.toggle('sel')">Learn Sign Language</span>
+        <span class="chip" onclick="this.classList.toggle('sel')">I'm a teacher</span>
+        <span class="chip" onclick="this.classList.toggle('sel')">Family member is deaf</span>
+        <span class="chip" onclick="this.classList.toggle('sel')">Family member is blind</span>
+        <span class="chip" onclick="this.classList.toggle('sel')">Community / NGO work</span>
+        <span class="chip" onclick="this.classList.toggle('sel')">General curiosity</span>
       </div>
     </div>
-    <div class="field" style="margin-top:20px;">
+    <div class="field" style="margin-top:16px;">
       <label>How did you hear about us?</label>
-      <select id="regSource">
-        <option value="">Select one...</option>
-        <option>Facebook / Social Media</option>
-        <option>Friend or Family</option>
-        <option>Teacher / School</option>
-        <option>NGO / Organisation</option>
-        <option>Google / Search</option>
-        <option>Other</option>
-      </select>
+      <select id="rSource"><option value="">Select...</option><option>Social Media</option><option>Friend or Family</option><option>Teacher / School</option><option>NGO / Organisation</option><option>Google Search</option><option>Other</option></select>
     </div>
-    <button class="btn gold" id="btn3" onclick="step3Finish()" style="margin-top:12px;"><span class="bl">Complete Registration ✓</span><div class="spin"></div></button>
+    <button class="btn gold" id="btn3" onclick="doStep3()" style="margin-top:12px;"><span class="bl">Complete Registration ✓</span><div class="spin"></div></button>
   </div>
 
-  <!-- STEP 4: SUCCESS -->
-  <div class="step" id="step4">
+  <!-- STEP 4: SUCCESS + USER PORTAL REDIRECT -->
+  <div class="step" id="s4">
     <div class="success">
-      <div class="icon">🎊</div>
+      <div class="sicon">🎊</div>
       <h2>Welcome to SanketSiksha!</h2>
       <p class="nep">स्वागत छ — संकेत शिक्षामा</p>
-      <p>Your free account is ready. Nepal's first Braille &amp; Sign Language platform is yours — completely free, forever.</p>
-      <a href="braille.html" class="btn" style="text-decoration:none;display:flex;margin-bottom:10px;"><span class="bl">🔵 Start Braille Course →</span></a>
-      <a href="signlanguage.html" class="btn gold" style="text-decoration:none;display:flex;"><span class="bl">🤟 Start NSL Course →</span></a>
-      <div style="margin-top:20px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
-        <a href="teachers.html" style="font-size:13px;color:var(--muted-l);text-decoration:none;">Teacher Resources</a>
-        <span style="color:var(--muted);">·</span>
-        <a href="index.html" style="font-size:13px;color:var(--muted-l);text-decoration:none;">Home</a>
+      <p>Your free account is ready. Redirecting you to your personal dashboard…</p>
+      <div style="width:100%;height:4px;background:#1E3A5F;border-radius:2px;overflow:hidden;margin-bottom:20px;">
+        <div id="redirectBar" style="height:100%;background:var(--blue);width:0%;transition:width 2s linear;border-radius:2px;"></div>
       </div>
+      <a href="dashboard.html" class="btn" style="text-decoration:none;display:flex;" id="dashBtn"><span class="bl">Go to My Dashboard →</span></a>
     </div>
   </div>
-
 </div>
 </main>
-
-<footer class="af">
-  <p>© 2025 SanketSiksha — Free forever · <a href="index.html">Home</a> · <a href="login.html">Log In</a></p>
-</footer>
+<footer class="af"><p>© 2025 SanketSiksha — Free forever · <a href="index.html">Home</a> · <a href="login.html">Log In</a></p></footer>
 
 <script>
-var DEMO_OTP = '123456';
-var regTimer = null, regSecs = 300;
-var currentStep = 1;
+// ── REAL EMAIL VALIDATION ──
+// Block known fake/disposable domains and require valid TLD structure
+var BLOCKED_DOMAINS = [
+  'mailinator.com','guerrillamail.com','tempmail.com','throwaway.email',
+  'yopmail.com','10minutemail.com','trashmail.com','sharklasers.com',
+  'guerrillamailblock.com','grr.la','guerrillamail.info','spam4.me',
+  'maildrop.cc','dispostable.com','fakeinbox.com','mailnull.com',
+  'spamgourmet.com','trashmail.me','discard.email','spamherelots.com',
+  'tempinbox.com','deadaddress.com','spambox.us','spamfree24.org',
+  'example.com','test.com','fake.com','noemail.com','nomail.com'
+];
 
-function goStep(n) {
-  document.querySelectorAll('.step').forEach(function(s){ s.classList.remove('active'); });
-  document.getElementById('step'+n).classList.add('active');
-  currentStep = n;
-  // update progress circles
-  ['1','2','3','4'].forEach(function(i) {
-    var c = document.getElementById('rc'+i);
-    var l = document.getElementById('rl'+i);
-    if (!c) return;
-    c.classList.remove('active','done');
-    l.classList.remove('active');
-    if (parseInt(i) < n) { c.classList.add('done'); c.textContent = '✓'; }
-    else if (parseInt(i) === n) { c.classList.add('active'); c.textContent = i; l.classList.add('active'); }
-    else { c.textContent = i === '4' ? '✓' : i; }
+// Known real providers — gives green tick instantly
+var TRUSTED_DOMAINS = [
+  'gmail.com','yahoo.com','outlook.com','hotmail.com','icloud.com',
+  'live.com','msn.com','protonmail.com','tutanota.com','yandex.com',
+  'rediffmail.com','mail.com','zoho.com'
+];
+
+function isRealEmail(email) {
+  if (!email) return {ok:false, msg:'Email is required.'};
+  email = email.toLowerCase().trim();
+  // Basic format check
+  var parts = email.split('@');
+  if (parts.length !== 2) return {ok:false, msg:'Not a valid email format.'};
+  var local = parts[0], domain = parts[1];
+  if (local.length < 1 || domain.length < 3) return {ok:false, msg:'Email is too short.'};
+  if (!domain.includes('.')) return {ok:false, msg:'Domain must have a dot (e.g. gmail.com).'};
+  var tld = domain.split('.').pop();
+  if (tld.length < 2) return {ok:false, msg:'Invalid domain extension.'};
+  // Check blocked
+  if (BLOCKED_DOMAINS.includes(domain)) return {ok:false, msg:'Disposable/fake email addresses are not allowed. Use your real email.'};
+  // Check for obvious fake patterns
+  if (/^(test|fake|asdf|qwer|zxcv|aaaa|bbbb|cccc|1234|abcd)/.test(local)) return {ok:false, msg:'Please use your real email address.'};
+  if (local.length < 3) return {ok:false, msg:'Email local part too short.'};
+  // Full regex
+  var re = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/;
+  if (!re.test(email)) return {ok:false, msg:'Enter a valid email address.'};
+  return {ok:true};
+}
+
+function validateEmailLive(input) {
+  var result = isRealEmail(input.value.trim());
+  var err = document.getElementById('eEmail');
+  if (!input.value) { input.classList.remove('ok','err'); err.classList.remove('show'); return; }
+  if (result.ok) {
+    input.classList.add('ok'); input.classList.remove('err');
+    err.classList.remove('show');
+  } else {
+    input.classList.add('err'); input.classList.remove('ok');
+    err.textContent = result.msg;
+    err.classList.add('show');
+  }
+}
+
+// ── STRONG PASSWORD CHECK ──
+// Strong = all 5 requirements met: length>=8, uppercase, lowercase, number, special char
+function checkStrength(pw) {
+  var reqs = {
+    len: pw.length >= 8,
+    up:  /[A-Z]/.test(pw),
+    low: /[a-z]/.test(pw),
+    num: /[0-9]/.test(pw),
+    sym: /[^A-Za-z0-9]/.test(pw)
+  };
+  // Update requirement indicators
+  toggle('req-len', reqs.len);
+  toggle('req-up',  reqs.up);
+  toggle('req-low', reqs.low);
+  toggle('req-num', reqs.num);
+  toggle('req-sym', reqs.sym);
+
+  var score = Object.values(reqs).filter(Boolean).length;
+  var bars = ['bar1','bar2','bar3','bar4'];
+  var levelClass = score <= 1 ? 'weak' : score === 2 ? 'fair' : score === 3 ? 'good' : score === 4 ? 'good' : 'strong';
+  var labels = ['','Too weak','Weak','Fair — add more','Good — almost there!','Strong ✓'];
+  var colors = ['','#EF4444','#F59E0B','#F0B429','#60A5FA','#10B981'];
+  bars.forEach(function(id, i) {
+    var el = document.getElementById(id);
+    el.className = 'pw-bar' + (i < score ? ' ' + levelClass : '');
   });
-  ['12','23','34'].forEach(function(pair) {
-    var a = parseInt(pair[0]), b = parseInt(pair[1]);
-    var line = document.getElementById('rl'+pair);
-    if (line) line.classList.toggle('done', n > a);
-  });
+  var lbl = document.getElementById('pwLabel');
+  lbl.textContent = labels[score] || '';
+  lbl.style.color = colors[score] || 'var(--muted)';
 }
 
-function showAlert(msg, type) {
-  var el = document.getElementById('regAlert');
-  el.textContent = msg;
-  el.className = 'alert show ' + type;
-  setTimeout(function(){ el.classList.remove('show'); }, 5000);
+function toggle(id, on) {
+  var el = document.getElementById(id);
+  if (el) el.classList.toggle('met', on);
 }
 
-function setLoading(id, on) {
-  var b = document.getElementById(id);
-  b.classList.toggle('loading', on);
-  b.disabled = on;
+function isStrongPassword(pw) {
+  return pw.length >= 8 && /[A-Z]/.test(pw) && /[a-z]/.test(pw) && /[0-9]/.test(pw) && /[^A-Za-z0-9]/.test(pw);
 }
 
-function togglePw(id, btn) {
-  var inp = document.getElementById(id);
-  inp.type = inp.type === 'password' ? 'text' : 'password';
-  btn.textContent = inp.type === 'password' ? '👁' : '🙈';
-}
+// ── OTP system ──
+var DEMO_OTP = '123456'; // In production: replace with server-generated OTP sent to real email
+var otpTimer = null, otpSecs = 300;
 
-function checkPwStrength(pw) {
-  var bars = [document.getElementById('pb1'),document.getElementById('pb2'),document.getElementById('pb3'),document.getElementById('pb4')];
-  var txt = document.getElementById('pwText');
-  bars.forEach(function(b){ b.className='pw-bar'; });
-  if (!pw) { txt.textContent = 'Enter a password'; txt.style.color = ''; return; }
-  var score = 0;
-  if (pw.length >= 8) score++;
-  if (/[A-Z]/.test(pw)) score++;
-  if (/[0-9]/.test(pw)) score++;
-  if (/[^A-Za-z0-9]/.test(pw)) score++;
-  var levels = ['','weak','medium','medium','strong'];
-  var labels = ['','Too short','Fair','Good','Strong 💪'];
-  var colors = ['','#EF4444','#F0B429','#F0B429','#10B981'];
-  for (var i=0; i<score; i++) bars[i].className='pw-bar '+levels[score];
-  txt.textContent = labels[score] || '';
-  txt.style.color = colors[score] || '';
-}
+function genOTP() { return String(Math.floor(100000 + Math.random()*900000)); }
 
-function toggleChip(el) { el.classList.toggle('selected'); }
-
-function isValidEmail(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e); }
-
-function step1Next() {
-  var first = document.getElementById('regFirst').value.trim();
-  var email = document.getElementById('regEmail').value.trim();
-  var pass = document.getElementById('regPass').value;
-  var pass2 = document.getElementById('regPass2').value;
-  var terms = document.getElementById('regTerms').checked;
-  var ok = true;
-
-  document.getElementById('firstErr').classList.toggle('show', !first);
-  document.getElementById('emailErr').classList.toggle('show', !isValidEmail(email));
-  document.getElementById('passErr').classList.toggle('show', pass.length < 8);
-  document.getElementById('pass2Err').classList.toggle('show', pass !== pass2);
-
-  if (!first || !isValidEmail(email) || pass.length < 8 || pass !== pass2) ok = false;
-  if (!terms) { showAlert('Please agree to the Terms of Use to continue.', 'error'); return; }
-  if (!ok) return;
-
-  setLoading('btn1', true);
-  setTimeout(function() {
-    setLoading('btn1', false);
-    document.getElementById('otpEmailShow').textContent = email;
-    goStep(2);
-    startTimer();
-    document.querySelector('.ob').focus();
-  }, 1000);
-}
-
-function socialReg(p) { showAlert('Connecting to '+p+' — Firebase Auth setup needed. See readme.', 'info'); }
-
-// OTP boxes
-document.querySelectorAll('.ob').forEach(function(box, i, all) {
-  box.addEventListener('input', function() {
-    this.value = this.value.replace(/[^0-9]/g,'');
-    if (this.value && i < all.length-1) all[i+1].focus();
-    this.classList.toggle('filled', !!this.value);
-  });
-  box.addEventListener('keydown', function(e) {
-    if (e.key==='Backspace' && !this.value && i>0) all[i-1].focus();
-  });
-  box.addEventListener('paste', function(e) {
-    e.preventDefault();
-    var p = (e.clipboardData||window.clipboardData).getData('text').replace(/\D/g,'').slice(0,6);
-    all.forEach(function(b,j){ b.value=p[j]||''; b.classList.toggle('filled',!!b.value); });
-    if (p.length>=6) all[5].focus();
-  });
-});
-
-function getOTP() {
-  var v='';
-  document.querySelectorAll('.ob').forEach(function(b){ v+=b.value; });
-  return v;
-}
-
-function step2Verify() {
-  var code = getOTP();
-  if (code.length < 6) { showAlert('Please enter all 6 digits.', 'error'); return; }
-  setLoading('btn2', true);
-  setTimeout(function() {
-    setLoading('btn2', false);
-    if (code === DEMO_OTP) {
-      document.querySelectorAll('.ob').forEach(function(b){ b.classList.add('ok'); });
-      clearInterval(regTimer);
-      setTimeout(function(){ goStep(3); }, 600);
-    } else {
-      document.querySelectorAll('.ob').forEach(function(b){
-        b.classList.add('bad');
-        setTimeout(function(){ b.classList.remove('bad'); b.value=''; b.classList.remove('filled'); }, 500);
-      });
-      document.querySelector('.ob').focus();
-      showAlert('Wrong code. Demo code: ' + DEMO_OTP, 'error');
-    }
-  }, 800);
-}
-
-function startTimer() {
-  regSecs = 300;
-  clearInterval(regTimer);
+function startOTPTimer() {
+  otpSecs = 300;
+  clearInterval(otpTimer);
   document.getElementById('resendBtn').classList.remove('show');
-  regTimer = setInterval(function() {
-    regSecs--;
-    var m=Math.floor(regSecs/60), s=regSecs%60;
-    var el=document.getElementById('otpTime');
-    if (el) el.textContent=(m<10?'0':'')+m+':'+(s<10?'0':'')+s;
-    if (regSecs<=0) {
-      clearInterval(regTimer);
-      if (el) el.textContent='Expired';
+  otpTimer = setInterval(function() {
+    otpSecs--;
+    var m = Math.floor(otpSecs/60), s = otpSecs%60;
+    var el = document.getElementById('otpClock');
+    if (el) el.textContent = (m<10?'0':'')+m+':'+(s<10?'0':'')+s;
+    if (otpSecs <= 0) {
+      clearInterval(otpTimer);
+      if (el) el.textContent = 'Expired';
       document.getElementById('resendBtn').classList.add('show');
     }
   }, 1000);
 }
 
-function resendCode() {
-  DEMO_OTP = String(Math.floor(100000+Math.random()*900000));
+function resendOTP() {
+  DEMO_OTP = genOTP();
   document.getElementById('demoCode').textContent = DEMO_OTP;
-  document.querySelectorAll('.ob').forEach(function(b){ b.value=''; b.classList.remove('filled','ok','bad'); });
+  document.querySelectorAll('.ob').forEach(function(b){ b.value=''; b.className='ob'; });
   document.getElementById('resendBtn').classList.remove('show');
-  showAlert('New code sent! Demo: '+DEMO_OTP, 'info');
-  startTimer();
+  showAlert('New code generated. Demo code: ' + DEMO_OTP, 'info');
+  startOTPTimer();
   document.querySelector('.ob').focus();
 }
 
-function step3Finish() {
+function getOTPVal() {
+  var v = '';
+  document.querySelectorAll('.ob').forEach(function(b){ v += b.value; });
+  return v;
+}
+
+// OTP auto-advance
+document.querySelectorAll('.ob').forEach(function(box, i, all) {
+  box.addEventListener('input', function() {
+    this.value = this.value.replace(/[^0-9]/g, '');
+    if (this.value && i < all.length-1) all[i+1].focus();
+    this.classList.toggle('filled', !!this.value);
+  });
+  box.addEventListener('keydown', function(e) {
+    if (e.key === 'Backspace' && !this.value && i > 0) all[i-1].focus();
+  });
+  box.addEventListener('paste', function(e) {
+    e.preventDefault();
+    var p = (e.clipboardData||window.clipboardData).getData('text').replace(/\D/g,'').slice(0,6);
+    all.forEach(function(b,j){ b.value=p[j]||''; b.classList.toggle('filled',!!b.value); });
+    if (p.length >= 6) all[5].focus();
+  });
+});
+
+// ── STEP NAVIGATION ──
+function goTo(n) {
+  document.querySelectorAll('.step').forEach(function(s){ s.classList.remove('active'); });
+  document.getElementById('s'+n).classList.add('active');
+  ['1','2','3','4'].forEach(function(i) {
+    var c = document.getElementById('pc'+i);
+    var l = document.getElementById('pl'+i);
+    c.classList.remove('active','done');
+    l.classList.remove('active');
+    var ni = parseInt(i);
+    if (ni < n) { c.classList.add('done'); c.textContent = '✓'; }
+    else if (ni === n) { c.classList.add('active'); c.textContent = i; l.classList.add('active'); }
+    else { c.textContent = i === '4' ? '✓' : i; }
+  });
+  ['12','23','34'].forEach(function(pair) {
+    var line = document.getElementById('pl'+pair);
+    if (line) line.classList.toggle('done', n > parseInt(pair[0]));
+  });
+}
+
+function showAlert(msg, type) {
+  var el = document.getElementById('alertBox');
+  el.textContent = msg; el.className = 'alert show '+type;
+  setTimeout(function(){ el.classList.remove('show'); }, 5000);
+}
+function setLoading(id, on) { var b=document.getElementById(id); b.classList.toggle('loading',on); b.disabled=on; }
+function togglePw(id, btn) { var i=document.getElementById(id); i.type=i.type==='password'?'text':'password'; btn.textContent=i.type==='password'?'👁':'🙈'; }
+
+// ── STEP 1 ──
+function doStep1() {
+  var first = document.getElementById('rFirst').value.trim();
+  var email = document.getElementById('rEmail').value.trim();
+  var pass  = document.getElementById('rPass').value;
+  var pass2 = document.getElementById('rPass2').value;
+  var terms = document.getElementById('rTerms').checked;
+  var emailResult = isRealEmail(email);
+
+  document.getElementById('eFirst').classList.toggle('show', !first);
+  document.getElementById('eEmail').textContent = emailResult.msg || 'Invalid email.';
+  document.getElementById('eEmail').classList.toggle('show', !emailResult.ok);
+  document.getElementById('ePass').classList.toggle('show', !isStrongPassword(pass));
+  document.getElementById('ePass2').classList.toggle('show', pass !== pass2 || !pass2);
+
+  if (!first || !emailResult.ok || !isStrongPassword(pass) || pass !== pass2) {
+    if (!isStrongPassword(pass)) showAlert('Password must be Strong: include uppercase, lowercase, number, and special character.', 'error');
+    return;
+  }
+  if (!terms) { showAlert('Please agree to the Terms of Use to continue.', 'error'); return; }
+
+  // Save user data to sessionStorage for dashboard
+  var userData = {
+    name: first + ' ' + (document.getElementById('rLast').value.trim()),
+    firstName: first,
+    email: email,
+    role: document.getElementById('rRole').value,
+    joinedDate: new Date().toLocaleDateString('en-GB', {day:'numeric',month:'long',year:'numeric'}),
+    progress: { braille: 0, nsl: 0 }
+  };
+  sessionStorage.setItem('ssUser', JSON.stringify(userData));
+
+  setLoading('btn1', true);
+  setTimeout(function() {
+    setLoading('btn1', false);
+    document.getElementById('otpEmail').textContent = email;
+    DEMO_OTP = genOTP();
+    document.getElementById('demoCode').textContent = DEMO_OTP;
+    goTo(2);
+    startOTPTimer();
+    document.querySelector('.ob').focus();
+  }, 900);
+}
+
+// ── STEP 2 ──
+function doStep2() {
+  var code = getOTPVal();
+  if (code.length < 6) { showAlert('Please enter all 6 digits of the code.', 'error'); return; }
+  setLoading('btn2', true);
+  setTimeout(function() {
+    setLoading('btn2', false);
+    if (code === DEMO_OTP) {
+      document.querySelectorAll('.ob').forEach(function(b){ b.classList.add('ok'); });
+      clearInterval(otpTimer);
+      setTimeout(function(){ goTo(3); }, 600);
+    } else {
+      document.querySelectorAll('.ob').forEach(function(b){
+        b.classList.add('bad');
+        setTimeout(function(){ b.classList.remove('bad'); b.value=''; b.className='ob'; }, 500);
+      });
+      document.querySelector('.ob').focus();
+      showAlert('Incorrect code. Please try again. Check the demo code above.', 'error');
+    }
+  }, 800);
+}
+
+// ── STEP 3 ──
+function doStep3() {
+  var goals = [];
+  document.querySelectorAll('.chip.sel').forEach(function(c){ goals.push(c.textContent.trim()); });
+  var userData = JSON.parse(sessionStorage.getItem('ssUser') || '{}');
+  userData.goals = goals;
+  userData.source = document.getElementById('rSource').value;
+  sessionStorage.setItem('ssUser', JSON.stringify(userData));
+
   setLoading('btn3', true);
   setTimeout(function() {
     setLoading('btn3', false);
-    goStep(4);
-  }, 900);
+    goTo(4);
+    // Animate redirect bar
+    setTimeout(function(){
+      document.getElementById('redirectBar').style.width = '100%';
+    }, 100);
+    // Auto redirect after 2.5s
+    setTimeout(function(){
+      window.location.href = 'dashboard.html';
+    }, 2600);
+  }, 800);
 }
 </script>
 </body>
